@@ -1,0 +1,25 @@
+:root {
+    /* --- Colores principales --- */
+    --color-bg: #f9f4fbff;
+    --color-primary: #303099;
+    --color-secondary: #4233ceff;
+    --color-tertiary: #1d194cff;
+    --color-quaternary: #a9b2ff;
+
+    /* --- TAMAÑOS PARA DESKTOP (Por defecto) --- */
+--fs-xs: clamp(0.4rem, 0.35rem + 0.25vw, 0.55rem);
+    --fs-small: clamp(0.6rem, 0.55rem + 0.25vw, 0.75rem);
+    --fs-body: clamp(0.8rem, 0.75rem + 0.25vw, 0.95rem);
+    --fs-h4: clamp(1.125rem, 1.09rem + 0.13vw, 1.25rem);
+    --fs-h3: clamp(1.3rem, 1.2rem + 0.5vw, 1.6rem);
+    --fs-h2: clamp(1.6rem, 1.45rem + 0.75vw, 2.1rem);
+    --fs-h1: clamp(2rem, 1.8rem + 1vw, 2.8rem);
+
+    /* Pesos visuales sugeridos */
+    --fw-black: 900;
+    --fw-extrabold: 800;
+    --fw-bold: 700;
+    --fw-regular: 400;
+    --fw-light: 200;
+    --fw-extralight: 100;
+}
