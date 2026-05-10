@@ -1,0 +1,63 @@
+---
+import BtnBasic from "../shared/button/BtnBasic.astro";
+---
+
+<nav class="navbar">
+  <div class="nav-elements">
+    <p>ACCEDE A 50% DESCUENTO</p>
+    <BtnBasic class="btn">QUIERO OBTENER EL CURSO</BtnBasic>
+    <p><span id="countdown"></span> CUPOS DISPONIBLES</p>
+  </div>
+</nav>
+
+<script>
+  const START_DATE = new Date("2026-05-09T00:00:00");
+  const MAX_VALUE = 100;
+
+  function updateCounter() {
+    const now = new Date();
+
+    const diffInMs = now.getTime() - START_DATE.getTime();
+    const daysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    const currentValue = MAX_VALUE - (daysPassed % MAX_VALUE);
+
+    const span = document.getElementById("countdown");
+    if (span) span.textContent = currentValue.toString();
+  }
+
+  updateCounter();
+</script>
+
+<style>
+  .navbar {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    right: 0;
+    background-color: var(--color-primary);
+    
+
+    .nav-elements {
+      width: fit-content;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.5rem;
+
+      p{
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-extralight);
+        color: var(--color-bg);
+        flex-shrink: 0;
+      }
+
+      .btn {
+        flex-shrink: 0;
+      }
+    }
+  }
+</style>
