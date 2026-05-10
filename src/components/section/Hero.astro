@@ -1,0 +1,126 @@
+---
+import BtnBasic from "../shared/button/BtnBasic.astro";
+import CrdBasic from "../shared/card/CrdBasic.astro";
+import SvgSingle from "../shared/svg/SvgSingle.astro";
+
+interface Card {
+    title: string;
+    description: string;
+}
+
+const cardInfo: Card[] = [
+    {
+        title: "$3➜$500k",
+        description: "en presupuestos manejados directamente",
+    },
+    {
+        title: "+100",
+        description: "estudiantes que han aprendido conmigo",
+    },
+    {
+        title: "+10 años",
+        description: "en Pais Media y estrategia digital",
+    },
+    {
+        title: "En Vivo",
+        description: "clases donde resuelves dudas en tiempo real",
+    },
+];
+---
+
+<section class="hero">
+    <SvgSingle name="logo" width="10rem" />
+    <h1 class="hero-title">
+        Aprende a <span>vender por<br /> Meta Ads </span> sin desperdiciar<br /> dinero,
+        <span>incluso con<br /> presupuesto limitado.</span>
+    </h1>
+    <p class="hero-description">
+        El único curso que combina fundamentos de marketing reales, estratégias
+        prácticas de Meta Ads sin tecnicismos, y los bonos que uso con mis
+        clientes.
+    </p>
+    <ul class="hero-list">
+        <li>Fundamentos de Marketing que funcionan</li>
+        <li>Estrategias prácticas - sin tecnicismos innecesarios</li>
+        <li>Bonos gratuitos que uso con mis clientes</li>
+    </ul>
+
+    <div class="hero-action">
+        <BtnBasic bgColor="#303099" txColor="white">
+            QUIERO DOMINAR META ADS
+        </BtnBasic>
+        <p class="action-caption">ACCESO DE POR VIDA</p>
+    </div>
+
+    <div class="hero-cards">
+        {
+            cardInfo.map((item) => (
+                <CrdBasic class="card-item">
+                    <h2 class="card-title">{item.title}</h2>
+                    <p class="card-text">{item.description}</p>
+                </CrdBasic>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        color: var(--color-primary);
+        text-align: center;
+        padding: 0rem 4%;
+        margin-top: 2rem;
+        font-size: var(--fs-small);
+
+        .hero-title {
+            max-width: 25rem;
+            font-size: var(--fs-h4);
+            font-weight: var(--fw-black);
+
+            span {
+                color: var(--color-secondary);
+            }
+        }
+
+        .hero-description {
+            max-width: 17rem;
+            font-weight: var(--fw-extralight);
+        }
+
+        .hero-list {
+            max-width: 17rem;
+        }
+
+        .hero-action {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .action-caption {
+            }
+        }
+
+        .hero-cards {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+
+            .card-item {
+                .card-title {
+                    font-weight: var(--fw-black);
+                }
+
+                .card-text {
+                    max-width: 6rem;
+                }
+            }
+        }
+    }
+</style>
