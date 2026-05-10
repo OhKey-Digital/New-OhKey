@@ -1,0 +1,74 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface BaseProps {
+    variant?: "base";
+    size?: "sm" | "md" | "lg";
+    bgColor?: string;
+    txColor?: string;
+}
+
+type Props =
+    | (BaseProps & HTMLAttributes<"button"> & { href?: never })
+    | (BaseProps & HTMLAttributes<"a"> & { href: string });
+
+const props = Astro.props as Props;
+const {
+    variant = "base",
+    size = "sm",
+    bgColor,
+    txColor,
+    class: className,
+    ...rest
+} = props;
+
+const isLink = "href" in props && props.href !== undefined;
+const Tag = isLink ? "a" : "button";
+
+const isExternalLink = isLink && (rest as any).target === "_blank";
+const externalLinkProps = isExternalLink ? { rel: "noopener noreferrer" } : {};
+
+const defaultButtonProps =
+    !isLink && !(rest as any).type ? { type: "button" } : {};
+
+const inlineStyles = {
+    ...(bgColor && { "--bg-color": bgColor }),
+    ...(txColor && { "--tx-color": txColor }),
+};
+---
+
+<Tag
+    class:list={["btn", `variant-${variant}`, `size-${size}`, className]}
+    style={Object.keys(inlineStyles).length > 0 ? inlineStyles : null}
+    {...defaultButtonProps}
+    {...externalLinkProps}
+    {...rest as any}
+>
+    <slot />
+</Tag>
+
+<style>
+    .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: var(--fw-extrabold);
+    }
+
+    /* Variants */
+    .variant-base {
+        background-color: var(--bg-color, white);
+        color: var(--tx-color, var(--color-tertiary));
+        border-radius: 20px;
+    }
+
+    /* Size */
+    .size-sm {
+        font-size: var(--fs-small);
+        padding: 0.5rem 1rem;
+    }
+
+    .size-md {
+        padding: 1rem 1.5rem;
+    }
+</style>

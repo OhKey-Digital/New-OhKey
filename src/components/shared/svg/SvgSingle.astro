@@ -1,0 +1,60 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"span"> {
+  name: string;
+  width?: string;
+  height?: string;
+}
+
+const { 
+  name, 
+  width = "5rem", 
+  height = "auto", 
+  class: className, 
+  ...rest 
+} = Astro.props;
+
+const svgs = import.meta.glob<string>("/src/assets/svgs/**/*.svg", {
+  query: "?raw",
+  import: "default",
+});
+
+const filepath = `/src/assets/svgs/${name}.svg`;
+
+if (!(filepath in svgs)) {
+  throw new Error(`[SvgSingle] El archivo "${name}.svg" no existe en /src/assets/svgs/`);
+}
+
+const svgContent = await svgs[filepath]();
+
+const inlineStyles = {
+  "--svg-width": width,
+  "--svg-height": height,
+};
+---
+
+<span 
+  class:list={["svg-single", className]} 
+  style={inlineStyles}
+  {...rest} 
+  set:html={svgContent} 
+/>
+
+<style>
+  .svg-single {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--svg-width);
+    height: var(--svg-height);
+    color: inherit;
+  }
+
+  /* .svg-single :global(.st0) {
+    fill: currentColor;
+  }
+  .svg-single :global(.st1) {
+    fill: none;
+  } */
+</style>
