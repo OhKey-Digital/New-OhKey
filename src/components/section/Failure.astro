@@ -1,0 +1,130 @@
+---
+import CrdBasic from "../shared/card/CrdBasic.astro";
+
+interface FailureCard {
+    number: string;
+    title: string;
+    description: string;
+}
+
+const failuresList: FailureCard[] = [
+    {
+        number: "01",
+        title: "LANZAN SIN ESTRATEGIA",
+        description:
+            "Publican, apagan, gastan dinero, culpan al algoritmo. Meta necesita un plan claro.",
+    },
+    {
+        number: "02",
+        title: "NO ENTIENDEN AL CLIENTE REAL",
+        description: `"Mi cliente ideal es empresario de 30-50 años". ¿Y su miedo? ¿Su frustración? Sin eso, tus anuncios pasan desapercibidos.`,
+    },
+    {
+        number: "03",
+        title: "CONFUNDEN VELOCIDAD CON RESULTADOS",
+        description:
+            "Crean un anuncio el lunes, lo apagan el jueves. Meta necesita tiempo para aprender.",
+    },
+    {
+        number: "04",
+        title: "NO MIDEN LO CORRECTO",
+        description:
+            "Clics e impresiones no importan. Lo que importa: ¿cuánto cuesta traer un cliente? ¿Es rentable?",
+    },
+    {
+        number: "05",
+        title: "CREAN ANUNCIOS GENÉRICOS",
+        description:
+            "Sin contexto, sin historia, sin razón para hacer clic. Si no toca un problema real, desaparece.",
+    },
+    {
+        number: "06",
+        title: "PRESUPUESTO SIN ESCALABILIDAD",
+        description:
+            "Tienen $50 para probar pero no saben cómo estructurar para que rinda.",
+    },
+];
+---
+
+<section class="failures-section">
+    <small class="failures__label">EL PROBLEMA</small>
+    <h2 class="failures__heading">
+        ¿Por qué fallan la mayoría de campañas en Meta?
+    </h2>
+
+    <div class="failures__grid">
+        {
+            failuresList.map((item) => (
+                <CrdBasic variant="border" class="failures__card">
+                    <small class="failures__card-number">{item.number}</small>
+                    <h3 class="failures__card-title">{item.title}</h3>
+                    <p class="failures__card-description">{item.description}</p>
+                </CrdBasic>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .failures-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--color-primary);
+        font-size: var(--fs-small);
+        padding: 2rem 4%;
+
+        .failures__label {
+            font-size: var(--fs-small);
+            font-weight: var(--fw-bold);
+        }
+
+        .failures__heading {
+            max-width: 20rem;
+            font-size: var(--fs-h3);
+            font-weight: var(--fw-black);
+        }
+
+        .failures__grid {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            align-items: stretch;
+
+            .failures__card {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                .failures__card-number {
+                    font-size: var(--fs-small);
+                    color: var(--color-quaternary);
+                    font-weight: var(--fw-black);
+                }
+
+                .failures__card-title {
+                    font-size: var(--fs-small);
+                    font-weight: var(--fw-black);
+                }
+
+                .failures__card-description {
+                    font-weight: var(--fw-light);
+                    max-width: 18rem;
+                    margin-inline: auto;
+                    flex-grow: 1;
+                }
+
+                @media (min-width: 768px) {
+                    width: 45%;
+                    max-width: 20rem;
+                }
+            }
+        }
+    }
+</style>

@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import authorDesktop from "../../assets/author/Daniela.webp";
+import authorMobile from "../../assets/author/Daniela-small.webp";
+---
+
+<section class="about-section">
+    <Image src={authorDesktop} alt="Daninela Franco" class="about__portrait--desktop"/>
+
+    <div class="about__data">
+        <small class="about__caption">ACERCA DE MI</small>
+
+        <Image src={authorMobile} alt="Daninela Franco" class="about__portrait--mobile"/>
+        
+        <h2 class="about__title">
+            DISEÑADORA GRÁFICA <br />ESTRATEGA DIGITAL, <br />MARKETERA
+            <span class="about__title-overlay">de corazón</span>
+        </h2>
+
+        <p class="about__phrase">
+            Desde 2015 trabajo en marketing digital y diseño, pero fue en Paid
+            Media donde aprendí a hacer crecer negocios. He manejado
+            presupuestos desde $3 hasta $500,000 USD.
+        </p>
+        <p class="about__phrase">
+            El quiebre fue cuando fundé OhKey. No había presupuesto inﬁnito.
+            Cada dólar tenía que contar. Eso me obligó a crear sistemas
+            eﬁcientes y validar antes de escalar.
+        </p>
+        <p class="about__phrase">
+            Mi misión: que aprendas a vender con Meta sin desperdiciar dinero.
+        </p>
+        
+        <p class="about__signature">De corazón</p>
+    </div>
+</section>
+
+<style>
+    .about-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--color-primary);
+        background-color: var(--color-quaternary);
+        font-size: var(--fs-body);
+        padding: 2rem 4%;
+        gap: 0.5rem;
+
+        .about__portrait--desktop {
+            width: auto;
+            height: 100%;
+            display: none;
+            border-radius: 2rem;
+
+            @media (min-width: 1024px) {
+                display: block;
+                grid-area: foto;
+                align-self: end;
+            }
+        }
+
+        .about__data {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .about__caption {
+                font-size: var(--fs-small);
+                font-weight: var(--fw-bold);
+            }
+
+            .about__portrait--mobile {
+                width: 8rem;
+                height: auto;
+                background-color: var(--color-primary);
+                border-radius: 2rem;
+                margin: auto auto;
+
+                @media (min-width: 1024px) {
+                    display: none;
+                }
+            }
+
+            .about__title {
+                max-width: 20rem;
+                font-size: var(--fs-h3);
+                font-weight: var(--fw-black);
+                position: relative;
+
+                .about__title-overlay {
+                    width: 100%;
+                    position: absolute;
+                    top: 5%;
+                    right: 50%;
+                    transform: translate(50%, -5%);
+                    font-family: "DesMontilles";
+                    font-weight: normal;
+                    font-size: var(--fs-h1);
+                    color: white;
+                    pointer-events: none;
+                }
+            }
+
+            .about__phrase {
+                font-weight: var(--fw-light);
+                max-width: 20rem;
+                margin-inline: auto;
+            }
+
+            .about__signature {
+                font-family: "DesMontilles";
+                font-size: var(--fs-h2);
+            }
+
+            @media (min-width: 1024px) {
+                grid-area: data;
+                padding: 2rem 0rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-areas: "foto data";
+            justify-items: center;
+            padding: 0rem 4%;
+        }
+    }
+</style>

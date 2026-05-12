@@ -1,0 +1,69 @@
+---
+import SvgSingle from "../shared/svg/SvgSingle.astro";
+import SvgSprite from "../shared/svg/SvgSprite.astro";
+---
+
+<footer class="footer">
+    <div class="data-content">
+        <SvgSingle name="logo" width="8rem" />
+        <div class="inf">
+            <h2>Cóntáctame a:</h2>
+            <a
+                class="email"
+                href="mailto:ohkeyestrategiasdigitales@gmail.com"
+                target="_blank"
+            >
+                <SvgSprite name="mail" size="0.5rem" />
+                <p>ohkeyestrategiasdigitales@gmail.com</p>
+            </a>
+            <a class="phone" href="https://wa.me/593982422500" target="_blank">
+                <SvgSprite name="phone" size="0.5rem" />
+                <p>+593 98 242 2500</p>
+            </a>
+        </div>
+    </div>
+
+    <p class="copyrigth">
+        © 2026 OhKey Estrategias Digitales · Hecho con estrategia, no con
+        suerte.
+    </p>
+</footer>
+
+<style>
+    .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1rem 4% 0.5rem 4%;
+        background-color: var(--color-quaternary);
+        font-size: var(--fs-xs);
+        gap: 1rem;
+
+        .data-content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+
+            .inf {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                justify-content: center;
+
+                a {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 0.2rem;
+                    font-weight: var(--fw-light);
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .copyrigth {
+            align-self: center;
+        }
+    }
+</style>

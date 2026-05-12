@@ -1,0 +1,43 @@
+<details class="accordion">
+    <summary class="summary">
+        <slot name="summary" />
+    </summary>
+    <div class="accordion-content">
+        <slot name="content" />
+    </div>
+</details>
+
+<style>
+    .accordion {
+        width: 100%;
+        border-top: 0.1rem solid black;
+        padding: 1rem 0.5rem;
+        transition: transform opacity 0.5s ease;
+        text-align: start;
+
+        .summary {
+            list-style: none;
+        }
+
+        &[open] .accordion-content {
+            animation: slideDown 0.5s ease-out;
+        }
+
+        &[open] {
+            .addition{
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateX(-2rem);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>

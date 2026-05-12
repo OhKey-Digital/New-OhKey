@@ -17,22 +17,19 @@ const { variant = "border", class: className, ...rest } = Astro.props;
 
 <style>
     .card{
-        max-width: 50%;
         padding: 1rem;
-        flex: 0 1 calc(50% - 1rem);
+        border-radius: 2rem;
         
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        @media (min-width: 768px){
-            width: 100%;
-            max-width: 12rem;
-        }
     }
 
     .variant-border{
         border: 0.1rem solid var(--color-quaternary);
-        border-radius: 30px;
+    }
+
+    .variant-none{
+        background-color: color-mix(in srgb, var(--color-bg), transparent 50%);
     }
 </style>

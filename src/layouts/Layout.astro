@@ -1,6 +1,7 @@
 ---
 import Footer from "../components/global/Footer.astro";
 import Navbar from "../components/global/Navbar.astro";
+import noise from "../assets/png/noise.png";
 
 import "../styles/reset.css";
 import "../styles/variables.css";
@@ -14,12 +15,12 @@ import "../styles/variables.css";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>OhKey</title>
 	</head>
 	<body>
-		<Navbar/>
+		<Navbar />
 		<slot />
-		<Footer/>
+		<Footer />
 	</body>
 </html>
 
@@ -30,6 +31,54 @@ import "../styles/variables.css";
 		width: 100%;
 		height: 100%;
 		overflow-x: hidden;
-		background-color: var(--color-bg);
+		position: relative;
+	}
+
+	body::before {
+		content: "";
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		background-image: url("../assets/png/noise.png");
+		opacity: 0.8;
+		animation: noise-move 0.5s infinite;
+		pointer-events: none;
+	}
+
+	@keyframes noise-move {
+		0%,
+		100% {
+			background-position: 0 0;
+		}
+		10% {
+			background-position: -5% -10%;
+		}
+		20% {
+			background-position: -15% 5%;
+		}
+		30% {
+			background-position: 7% -25%;
+		}
+		40% {
+			background-position: 20% 25%;
+		}
+		50% {
+			background-position: -25% 10%;
+		}
+		60% {
+			background-position: 15% 5%;
+		}
+		70% {
+			background-position: 0% 15%;
+		}
+		80% {
+			background-position: 25% 35%;
+		}
+		90% {
+			background-position: -10% 10%;
+		}
 	}
 </style>

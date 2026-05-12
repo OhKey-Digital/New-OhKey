@@ -1,0 +1,50 @@
+---
+import BtnBasic from "../shared/button/BtnBasic.astro";
+---
+
+<section class="goodbye">
+    <div class="goodbye-content">
+        <h2 class="goodbye__label">
+            Es tu momento de <br />aprender a vender en <br />grande usando Meta
+            Ads.
+        </h2>
+        <p class="goodbye__heading">
+            Sin desperdicio. Sin teoría vaga. Sin tips del momento. <br
+            />Estrategia real, paso a paso, desde hoy.
+        </p>
+    </div>
+
+    <BtnBasic bgColor="#303099" txColor="white" href="https://wa.me/593982422500" target="_blank">QUIERO ACCESO AHORA - $60 USD</BtnBasic>
+</section>
+
+<style>
+    .goodbye {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+
+        .goodbye-content {
+            display: flex;
+            flex-direction: column;
+            color: var(--color-primary);
+            text-align: center;
+            gap: 0.5rem;
+
+            .goodbye__label {
+                font-size: var(--fs-h3);
+                font-weight: var(--fw-black);
+            }
+
+            .goodbye__heading {
+                font-weight: var(--fw-light);
+                font-size: var(--fs-body);
+            }
+        }
+
+        .btn{
+            width: fit-content;
+        }
+    }
+</style>

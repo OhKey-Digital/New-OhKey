@@ -1,0 +1,106 @@
+---
+import CrdBasic from "../shared/card/CrdBasic.astro";
+
+interface TargetCard {
+    title: string;
+    description: string;
+}
+
+const targetAudience: TargetCard[] = [
+    {
+        title: "ESTUDIANTE",
+        description:
+            "Que quieren generar un recurso extra y conseguir sus propios clientes.",
+    },
+    {
+        title: "OTRO COLEGA",
+        description:
+            "Frameworks avanzados, optimización profunda, escalado sin romper rentabilidad.",
+    },
+    {
+        title: "EMPRENDEDOR",
+        description:
+            "Fundé OhKey con limitaciones. Sé exactamente cómo estructurar con $50, $200 o $500.",
+    },
+    {
+        title: "DISEÑADOR, CMS",
+        description:
+            "Amplía tus servicios ofreciendo manejo real de Meta Ads, no solo poner anuncios.",
+    },
+];
+---
+
+<section class="target-section">
+    <small class="target__caption">¿PARA QUIÉN ES?</small>
+    <h2 class="target__title">Este curso es para ti si eres…</h2>
+
+    <div class="target__grid">
+        {
+            targetAudience.map((item) => (
+                <CrdBasic variant="none" class="target__card">
+                    <h3 class="target__card-title">{item.title}</h3>
+                    <p class="target__card-description">{item.description}</p>
+                </CrdBasic>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .target-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--color-primary);
+        background-color: var(--color-quaternary);
+        font-size: var(--fs-small);
+        padding: 2rem 4%;
+
+        .target__caption {
+            font-size: var(--fs-small);
+            font-weight: var(--fw-bold);
+        }
+
+        .target__title {
+            max-width: 20rem;
+            font-size: var(--fs-h3);
+            font-weight: var(--fw-black);
+        }
+
+        .target__grid {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            align-items: stretch;
+
+            .target__card {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                .target__card-title {
+                    font-size: var(--fs-body);
+                    font-weight: var(--fw-black);
+                }
+
+                .target__card-description {
+                    font-weight: var(--fw-light);
+                    max-width: 15rem;
+                    margin-inline: auto;
+                    flex-grow: 1;
+                }
+
+                @media (min-width: 768px) {
+                    width: 45%;
+                    max-width: 20rem;
+                }
+            }
+        }
+    }
+</style>

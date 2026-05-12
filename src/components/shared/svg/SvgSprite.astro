@@ -1,0 +1,52 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"svg"> {
+    name: string;
+    size?: string;
+    color?: string;
+    "aria-label"?: string;
+}
+
+const {
+    name,
+    size = "1.5rem",
+    color = "currentColor",
+    "aria-label": ariaLabel,
+    class: className,
+    ...rest
+} = Astro.props;
+
+const isDecorative = !ariaLabel;
+
+const inlineStyles = {
+    "--icon-size": size,
+    "--icon-color": color,
+};
+---
+
+<svg
+    class:list={["icon", className]}
+    style={inlineStyles}
+    aria-hidden={isDecorative ? "true" : undefined}
+    aria-label={ariaLabel}
+    role={isDecorative ? undefined : "img"}
+    {...rest}
+>
+    <use href={`/sprites.svg#${name}`}></use>
+</svg>
+
+<style>
+    .icon {
+        aspect-ratio: 1 / 1;
+        width: var(--icon-size);
+        height: var(--icon-size);
+
+        fill: var(--icon-color);
+        color: var(--icon-color);
+
+        flex-shrink: 0;
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>

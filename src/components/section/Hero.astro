@@ -3,12 +3,12 @@ import BtnBasic from "../shared/button/BtnBasic.astro";
 import CrdBasic from "../shared/card/CrdBasic.astro";
 import SvgSingle from "../shared/svg/SvgSingle.astro";
 
-interface Card {
+interface HeroCard {
     title: string;
     description: string;
 }
 
-const cardInfo: Card[] = [
+const statsInfo: HeroCard[] = [
     {
         title: "$3➜$500k",
         description: "en presupuestos manejados directamente",
@@ -28,36 +28,39 @@ const cardInfo: Card[] = [
 ];
 ---
 
-<section class="hero">
+<section class="hero-section">
     <SvgSingle name="logo" width="10rem" />
-    <h1 class="hero-title">
+    
+    <h1 class="hero__title">
         Aprende a <span>vender por<br /> Meta Ads </span> sin desperdiciar<br /> dinero,
         <span>incluso con<br /> presupuesto limitado.</span>
     </h1>
-    <p class="hero-description">
+
+    <p class="hero__copy">
         El único curso que combina fundamentos de marketing reales, estratégias
         prácticas de Meta Ads sin tecnicismos, y los bonos que uso con mis
         clientes.
     </p>
-    <ul class="hero-list">
+
+    <ul class="hero__features">
         <li>Fundamentos de Marketing que funcionan</li>
         <li>Estrategias prácticas - sin tecnicismos innecesarios</li>
         <li>Bonos gratuitos que uso con mis clientes</li>
     </ul>
 
-    <div class="hero-action">
-        <BtnBasic bgColor="#303099" txColor="white">
+    <div class="hero__cta-group">
+        <BtnBasic bgColor="#303099" txColor="white" href="https://wa.me/593982422500" target="_blank">
             QUIERO DOMINAR META ADS
         </BtnBasic>
-        <p class="action-caption">ACCESO DE POR VIDA</p>
+        <small class="hero__cta-caption">ACCESO DE POR VIDA</small>
     </div>
 
-    <div class="hero-cards">
+    <div class="hero__stats-grid">
         {
-            cardInfo.map((item) => (
-                <CrdBasic class="card-item">
-                    <h2 class="card-title">{item.title}</h2>
-                    <p class="card-text">{item.description}</p>
+            statsInfo.map((item) => (
+                <CrdBasic class="hero__stat-card">
+                    <h2 class="hero__stat-title">{item.title}</h2>
+                    <p class="hero__stat-description">{item.description}</p>
                 </CrdBasic>
             ))
         }
@@ -65,18 +68,17 @@ const cardInfo: Card[] = [
 </section>
 
 <style>
-    .hero {
+    .hero-section {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
         color: var(--color-primary);
         text-align: center;
-        padding: 0rem 4%;
-        margin-top: 2rem;
+        padding: 2rem 4%;
         font-size: var(--fs-small);
 
-        .hero-title {
+        .hero__title {
             max-width: 25rem;
             font-size: var(--fs-h4);
             font-weight: var(--fw-black);
@@ -86,25 +88,26 @@ const cardInfo: Card[] = [
             }
         }
 
-        .hero-description {
+        .hero__copy {
             max-width: 17rem;
             font-weight: var(--fw-extralight);
         }
 
-        .hero-list {
+        .hero__features {
             max-width: 17rem;
         }
 
-        .hero-action {
+        .hero__cta-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
 
-            .action-caption {
+            .hero__cta-caption {
+                /* Estilos para "ACCESO DE POR VIDA" */
             }
         }
 
-        .hero-cards {
+        .hero__stats-grid {
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -112,13 +115,20 @@ const cardInfo: Card[] = [
             flex-wrap: wrap;
             gap: 0.5rem;
 
-            .card-item {
-                .card-title {
+            .hero__stat-card {
+                flex: 1 1 calc(50% - 1rem);
+
+                .hero__stat-title {
                     font-weight: var(--fw-black);
                 }
 
-                .card-text {
+                .hero__stat-description {
                     max-width: 6rem;
+                    margin-inline: auto;
+                }
+
+                @media (min-width: 768px) {
+                    flex: 0 1 12rem;
                 }
             }
         }

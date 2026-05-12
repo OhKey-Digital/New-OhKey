@@ -1,0 +1,108 @@
+---
+import CrdBasic from "../shared/card/CrdBasic.astro";
+import SvgSingle from "../shared/svg/SvgSingle.astro";
+import SvgSprite from "../shared/svg/SvgSprite.astro";
+
+interface BenefitCard {
+    icon: string;
+    title: string;
+    description: string;
+}
+
+const benefitsList: BenefitCard[] = [
+    {
+        icon: "books",
+        title: "10 MÓDULOS + CLASES EN VIVO",
+        description:
+            "Copywriting, creativos, segmentación, optimización, Pixel, IA. Estrategia sólida que funciona sin importar cambios del algoritmo. Clases JUE / VIE / SÁB 18:00.",
+    },
+    {
+        icon: "ads",
+        title: "COMUNIDAD + BONUS",
+        description:
+            "Grupo privado de Facebook con +100 estudiantes. Comunidad WhatsApp. +20 plantillas, checklists y frameworks que uso con mis clientes.",
+    },
+    {
+        icon: "software",
+        title: "ACCESO PERMANENTE",
+        description:
+            "Una vez compres, tienes acceso de por vida a TODAS las grabaciones y actualizaciones. Meta cambia; tú siempre tendrás lo más actual.",
+    },
+];
+---
+
+<section class="benefits-section">
+    <small class="benefits__label">¿QUÉ RECIBES?</small>
+    <h2 class="benefits__heading">
+        Todo lo que necesitas para campañas rentables.
+    </h2>
+
+    <div class="benefits__grid">
+        {
+            benefitsList.map((item) => (
+                <CrdBasic variant="none" class="benefits__card">
+                    <SvgSprite name={item.icon} size="2rem"/>
+                    <h3 class="benefits__card-title">{item.title}</h3>
+                    <p class="benefits__card-description">{item.description}</p>
+                </CrdBasic>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .benefits-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--color-primary);
+        background-color: var(--color-quaternary);
+        font-size: var(--fs-small);
+        padding: 2rem 4%;
+
+        .benefits__label {
+            font-size: var(--fs-small);
+            font-weight: var(--fw-bold);
+        }
+
+        .benefits__heading {
+            max-width: 20rem;
+            font-size: var(--fs-h3);
+            font-weight: var(--fw-black);
+        }
+
+        .benefits__grid {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            align-items: stretch;
+
+            .benefits__card {
+                flex: 0 1 calc(50% - 1rem);
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                .benefits__card-title {
+                    font-weight: var(--fw-black);
+                    font-size: var(--fs-body);
+                }
+
+                .benefits__card-description {
+                    font-weight: var(--fw-light);
+                    flex-grow: 1;
+                }
+
+                @media (min-width: 768px) {
+                    flex: 0 1 12rem;
+                }
+            }
+        }
+    }
+</style>

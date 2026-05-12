@@ -1,0 +1,379 @@
+---
+import AcdBase from "../shared/accordion/AcdBase.astro";
+import BtnBasic from "../shared/button/BtnBasic.astro";
+import SvgSprite from "../shared/svg/SvgSprite.astro";
+
+interface ModuleCard {
+    num: string;
+    title: string;
+    description: string;
+    list: Array<Record<string, string[]>>;
+}
+
+const cardInfo: ModuleCard[] = [
+    {
+        num: "01",
+        title: "La base de todo negocio que vende",
+        description: "El ciclo real de ventas",
+        list: [
+            {
+                section1: [
+                    "El verdadero ciclo de ventas que usan los negocios rentables",
+                    "Cómo conseguir clientes nuevos y hacer que vuelvan a comprarte",
+                    "Diferencia entre vender productos y vender servicios",
+                    "Gatillos mentales y psicología para vender más sin sonar vendedor",
+                ],
+            },
+        ],
+    },
+    {
+        num: "02",
+        title: "Investigación de mercado que hace ganar dinero",
+        description: "Descubre qué quiere tu cliente.",
+        list: [
+            {
+                section1: [
+                    "Por qué el cliente ideal tradicional ya no funciona",
+                    "Los 7 factores que determinan si alguien te compra o no",
+                    "Cómo descubrir dolores, deseos y objeciones reales",
+                    "Investigación profunda usando herramientas gratuitas",
+                ],
+            },
+        ],
+    },
+    {
+        num: "03",
+        title: "La fórmula de los anuncios que sí funcionan",
+        description: "El triángulo dorado del marketing.",
+        list: [
+            {
+                section1: [
+                    "Oferta irresistible: cómo hacer que quieran comprarte",
+                    "Audiencia",
+                    "Cómo escribir anuncios que convierten",
+                    "Creativos: Los 10 tipos de anuncios más efectivos",
+                    "Apps gratuitas para crear anuncios profesionales",
+                ],
+            },
+        ],
+    },
+    {
+        num: "04",
+        title: "Conﬁgura tu ecosistema en Meta",
+        description: "Business Manager correcto desde el inicio.",
+        list: [
+            {
+                section1: [
+                    "Checklist completo antes de lanzar campañas",
+                    "Cómo crear tu Business Manager correctamente",
+                    "Configuración profesional paso a paso",
+                    "Cómo conectar páginas, cuentas y activos",
+                    "Cómo evitar errores y bloqueos de Meta",
+                ],
+            },
+        ],
+    },
+    {
+        num: "05",
+        title: "Lanza campañas que generen resultados",
+        description: "Estructura hasta lanzamiento.",
+        list: [
+            {
+                section1: [
+                    "Partes de una campaña en Meta Ads",
+                    "Qué campañas usar en las 4 situaciones que enfrentan todos los negocios",
+                    "Cambios en la interfaz",
+                ],
+                section2: [
+                    "IA de Meta",
+                    "Meta GEM",
+                    "Meta Lattice",
+                    "Meta Andrómeda",
+                    "Sequence Learning",
+                    "Manus",
+                    "Meta SAM",
+                    "Cómo usar a Andrómeda a nuestro favor",
+                    "#1. Variedad Creativa",
+                    "#2. Datos de calidad",
+                    "#3. Estructura correcta",
+                    "Cómo calcular el presupuesto de tus campañas",
+                    "Distribución de presupuestos",
+                ],
+                section3: [
+                    "Campañas de Interacción",
+                    "Crear campañas desde cero",
+                    "Nombrando campañas, conjuntos de anuncios y anuncios",
+                    "Públicos y actualización",
+                ],
+                section4: [
+                    "Campañas de Ventas",
+                    "Crear campañas desde cero",
+                    "Parámetros de URL",
+                ],
+                section5: [
+                    "Campañas de Clientes Potenciales",
+                    "Crear campañas desde cero",
+                    "Cómo descargar clientes potenciales",
+                ],
+                section6: [
+                    "Campañas de Reconocimiento a Tiendas Físicas",
+                    "Crear campañas desde cero",
+                    "Ubicaciones del Negocio",
+                ],
+            },
+        ],
+    },
+    {
+        num: "06",
+        title: "Optimización: cómo dejar de perder dinero",
+        description: "La metodología real.",
+        list: [
+            {
+                section1: [
+                    "Cómo funciona realmente el algoritmo de meta",
+                    "Cómo analizar métricas correctamente",
+                    "Optimización avanzada de campañas",
+                    "Cómo mejorar creativos, mensajes y formularios",
+                    "Hacks y estrategias profesionales",
+                ],
+            },
+        ],
+    },
+    {
+        num: "07",
+        title: "Manejando tus campañas rentablemente",
+        description: "Con diferentes presupuesto",
+        list: [
+            {
+                section1: [
+                    "Los 2 errores más comunes al optimizar campañas de Meta Ads",
+                    "Cómo funciona el algoritmo de Meta Ads",
+                    "Cómo nunca perder dinero con tus anuncios",
+                ],
+                section2: [
+                    "Columnas",
+                    "Métricas para campañas de Ventas",
+                    "Métricas para campañas de Interacción",
+                    "Métricas para campañas de Clientes Potenciales",
+                    "Métricas para campañas de Reconocimiento",
+                ],
+                section3: [
+                    "Optimizando tus campañas",
+                    "Optimizando campañas de Interacción",
+                    "Optimizando campañas de Ventas",
+                    "Optimizando campañas de Clientes Potenciales",
+                    "Optimizando campañas de Reconocimiento a tiendas físicas",
+                    "Fase de aprendizaje",
+                ],
+                section4: [
+                    "Cómo optimizar tus anuncios (creativos)",
+                    "Optimizaciones en anuncios (creativos)",
+                ],
+                section5: [
+                    "Optimizando el destino de tus anuncios",
+                    "Optimizando tus mensajes",
+                    "Optimizando tus formularios",
+                    "Optimizando tu negocio local",
+                ],
+                section6: [
+                    "Hacks",
+                    "Anuncios de Colaboración",
+                    "Maximizar el valor de las conversiones (Optimización de Valor)",
+                    "Atribución Incremental",
+                    "Reglas de Valor",
+                    "Informes de anuncios",
+                ],
+            },
+        ],
+    },
+    {
+        num: "08",
+        title: "Escala tus campañas sin romper lo que funciona",
+        description: "El ciclo real de ventas",
+        list: [
+            {
+                section1: [
+                    "Escalado vertical sin reiniciar aprendizaje",
+                    "Escalado horizontal inteligente",
+                    "Cómo evitar fatiga publicitaria",
+                    "Cómo multiplicar resultados con nuevos creativos",
+                ],
+            },
+        ],
+    },
+    {
+        num: "09",
+        title: "Pixel y Api de conversiones sin enredos",
+        description: "Herramientas que Meta necesita.",
+        list: [
+            {
+                section1: [
+                    "Qué es el pixel y cómo configurarlo",
+                    "Integración con Google Analytics 4",
+                    "Google Tag Manager desde cero",
+                    "Implementación profesional de conversiones",
+                    "Integraciones con WhatsApp y CRM",
+                ],
+            },
+        ],
+    },
+    {
+        num: "10",
+        title: "Inteligencia Artificial Aplicada a Meta Ads",
+        description: "Minutos en vez de horas",
+        list: [
+            {
+                section1: [
+                    "Cómo investigar clientes con IA",
+                    "Cómo generar ideas virales",
+                    "Guiones, copies y hooks con IA",
+                    "Creación de imágenes hiperrealistas",
+                    "Herramientas: ChatGPT, Gemini, Claude, ElevenLabs, HeyGen y más",
+                ],
+            },
+        ],
+    },
+    {
+        num: "11",
+        title: "Biblioteca de recursos para emprendedores",
+        description: "Bonus",
+        list: [
+            {
+                section1: [
+                    "+ de 20 plantillas que uso en mi negocio y puedes usar en el tuyo.",
+                ],
+            },
+        ],
+    },
+];
+---
+
+<section class="modules-section">
+    <small class="modules__label">EL CAMINO</small>
+    <h2 class="modules__heading">10 módulos. 40 horas. Sin relleno.</h2>
+    <p class="modules__description">
+        En 2 semanas si te dedicas, o en 2-3 meses con calma.
+    </p>
+
+    <div class="modules__accordion-group">
+        {
+            cardInfo.map((item) => (
+                <AcdBase>
+                    <div slot="summary" class="modules__accordion-summary">
+                        <div class="container">
+                            <p class="modules__accordion-number">{item.num}</p>
+                            <div class="modules__accordion-info">
+                                <h3 class="modules__accordion-title">
+                                    {item.title}
+                                </h3>
+                                <p class="modules__accordion-text">
+                                    {item.description}
+                                </p>
+                            </div>
+                        </div>
+                        <SvgSprite
+                            name="addition"
+                            size="0.5rem"
+                            class="addition"
+                        />
+                    </div>
+                    <ul slot="content" class="modules__points-list">
+                        {item.list.map((sectionObj) =>
+                            Object.values(sectionObj).map((points) =>
+                                points.map((point) => <li>{point}</li>),
+                            ),
+                        )}
+                    </ul>
+                </AcdBase>
+            ))
+        }
+    </div>
+
+    <div class="modules__cta">
+        <BtnBasic bgColor="#303099" txColor="white" href="https://wa.me/593982422500" target="_blank">
+            QUIERO INSCRIBIRME
+        </BtnBasic>
+        <small class="modules__cta-caption">ACCESO DE POR VIDA</small>
+    </div>
+</section>
+
+<style>
+    .modules-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--color-primary);
+        font-size: var(--fs-small);
+        padding: 2rem 4%;
+
+        .modules__label {
+            font-size: var(--fs-small);
+            font-weight: var(--fw-bold);
+        }
+
+        .modules__heading {
+            max-width: 15rem;
+            font-size: var(--fs-h3);
+            font-weight: var(--fw-black);
+        }
+
+        .modules__description {
+            font-size: var(--fs-body);
+        }
+
+        .modules__accordion-group {
+            width: 100%;
+            max-width: 30rem;
+            margin-top: 1rem;
+
+            .modules__accordion-summary {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .container {
+                    display: flex;
+
+                    .modules__accordion-number {
+                        margin-right: 0.5rem;
+                        font-size: var(--fs-h4);
+                        font-weight: var(--fw-extrabold);
+                        color: var(--color-extra);
+                    }
+
+                    .modules__accordion-info {
+                        .modules__accordion-title {
+                            font-weight: var(--fw-bold);
+                        }
+                    }
+                }
+
+                .addition {
+                    width: 0.5rem;
+                    height: 0.5rem;
+                    padding: 0.2rem;
+                    color: white;
+                    border-radius: 50%;
+                    background-color: var(--color-tertiary);
+
+                    transition: transform 0.5s ease;
+                }
+            }
+
+            .modules__points-list {
+                padding: 0.5rem 2.4rem 0rem;
+                list-style: disc;
+                text-align: left;
+            }
+        }
+
+        .modules__cta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+    }
+</style>

@@ -5,9 +5,10 @@
     --color-secondary: #4233ceff;
     --color-tertiary: #1d194cff;
     --color-quaternary: #a9b2ff;
+    --color-extra: #7f57ffff;
 
     /* --- TAMAÑOS PARA DESKTOP (Por defecto) --- */
---fs-xs: clamp(0.4rem, 0.35rem + 0.25vw, 0.55rem);
+    --fs-xs: clamp(0.4rem, 0.35rem + 0.25vw, 0.55rem);
     --fs-small: clamp(0.6rem, 0.55rem + 0.25vw, 0.75rem);
     --fs-body: clamp(0.8rem, 0.75rem + 0.25vw, 0.95rem);
     --fs-h4: clamp(1.125rem, 1.09rem + 0.13vw, 1.25rem);

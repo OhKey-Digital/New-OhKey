@@ -1,0 +1,115 @@
+---
+import BtnBasic from "../shared/button/BtnBasic.astro";
+import CrdBasic from "../shared/card/CrdBasic.astro";
+
+const cardDetail: Array<string> = [
+    "40 horas de contenido en 10 módulos",
+    "Clases en vivo jueves, viernes, sábado 18:00",
+    "Grabaciones permanentes",
+    "+20 plantillas profesionales de OhKey",
+    "Grupo Facebook + comunidad WhatsApp",
+    "Acceso de por vida + actualizaciones",
+    "Cursos futuros con descuento",
+    "2 clases grabadas para los 20 primeros inscritos",
+];
+---
+
+<section class="price-section">
+    <small class="price__label">INVERSIÓN</small>
+    <h2 class="price__heading">$60 hoy. Después, $120.</h2>
+    <p class="price__description">
+        En 2 semanas si te dedicas, o en 2-3 meses con calma.
+    </p>
+
+    <div class="price__card-container">
+        <CrdBasic variant="none">
+            <small class="price-after">$120 USD</small>
+            <p class="price-now">$60</p>
+            <p class="price-now-detail">USD - PAGO ÚNICO</p>
+
+            <ul class="price-benefit-list">
+                {cardDetail.map((item) => <li>{item}</li>)}
+            </ul>
+
+            <div class="price__cta-group">
+                <BtnBasic bgColor="#303099" txColor="white" href="https://wa.me/593982422500" target="_blank">
+                    QUIERO DOMINAR META ADS
+                </BtnBasic>
+                <small >67/100 CUPOS <b>- 33 disponibles</b></small>
+            </div>
+        </CrdBasic>
+    </div>
+</section>
+
+<style>
+    .price-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        background-color: var(--color-primary);
+        font-size: var(--fs-small);
+        padding: 2rem 4%;
+
+        .price__label {
+            font-size: var(--fs-small);
+            font-weight: var(--fw-bold);
+        }
+
+        .price__heading {
+            max-width: 20rem;
+            font-size: var(--fs-h3);
+            font-weight: var(--fw-black);
+        }
+
+        .price__description {
+            font-size: var(--fs-body);
+        }
+
+        .price__card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            background-color: var(--color-quaternary);
+
+            .card {
+                background-color: white;
+                color: var(--color-primary);
+                max-width: 16rem;
+            }
+
+            .price-after {
+                text-decoration: line-through;
+                font-weight: var(--fw-light);
+            }
+
+            .price-now {
+                font-weight: var(--fw-black);
+                font-size: 4rem;
+            }
+
+            .price-now-detail {
+                font-weight: var(--fw-light);
+            }
+
+            .price-benefit-list {
+                list-style: disc;
+                text-align: start;
+                padding: 0.5rem 0rem 1rem 1rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+
+            .price__cta-group {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+</style>
