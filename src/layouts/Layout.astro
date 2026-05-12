@@ -1,7 +1,6 @@
 ---
 import Footer from "../components/global/Footer.astro";
 import Navbar from "../components/global/Navbar.astro";
-import noise from "../assets/png/noise.png";
 
 import "../styles/reset.css";
 import "../styles/variables.css";
@@ -14,8 +13,13 @@ import "../styles/variables.css";
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="canonical" href="https://ohkeydigital.com" />
+		<meta
+			name="description"
+			content="Estrategia digital, copywriting y optimización para tu negocio."
+		/>
 		<meta name="generator" content={Astro.generator} />
-		<title>OhKey</title>
+		<title>OhKey | Estrategia Digital</title>
 	</head>
 	<body>
 		<Navbar />
@@ -24,7 +28,28 @@ import "../styles/variables.css";
 	</body>
 </html>
 
-<style>
+<script>
+	const observerOptions = {
+		root: null,
+		threshold: 0.1,
+	};
+
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach((entry) => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add("active");
+				observer.unobserve(entry.target);
+			}
+		});
+	}, observerOptions);
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const sections = document.querySelectorAll(".reveal");
+		sections.forEach((section) => observer.observe(section));
+	});
+</script>
+
+<style is:global>
 	html,
 	body {
 		margin: 0;
@@ -46,6 +71,17 @@ import "../styles/variables.css";
 		opacity: 0.8;
 		animation: noise-move 0.5s infinite;
 		pointer-events: none;
+	}
+
+	.reveal {
+		opacity: 0;
+		transform: translateY(1rem);
+		transition: all 0.5s ease-in-out;
+	}
+
+	.reveal.active {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	@keyframes noise-move {
