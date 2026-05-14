@@ -23,7 +23,7 @@
 }
 
 html {
-    font-size: 1.05rem;
+    font-size: 1.25rem;
     font-family: "PublicSans";
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
@@ -31,7 +31,7 @@ html {
     scroll-behavior: smooth;
 
     @media (min-width: 768px){
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 }
 
