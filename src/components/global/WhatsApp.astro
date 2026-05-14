@@ -1,0 +1,18 @@
+---
+import SvgSprite from "../shared/svg/SvgSprite.astro";
+---
+
+<a class="bubble" href="https://wa.me/593982422500" target="_blank">
+    <SvgSprite name="whatsapp" size="2rem"/>
+</a>
+
+<style>
+    .bubble{
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 100;
+
+        filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.4));
+    }
+</style>
