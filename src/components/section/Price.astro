@@ -32,14 +32,34 @@ const cardDetail: Array<string> = [
             </ul>
 
             <div class="price__cta-group">
-                <BtnBasic bgColor="#303099" txColor="white" href="https://wa.me/593982422500" target="_blank">
+                <BtnBasic
+                    bgColor="#303099"
+                    txColor="white"
+                    href="https://wa.me/593982422500"
+                    target="_blank"
+                >
                     QUIERO DOMINAR META ADS
                 </BtnBasic>
-                <small >67/100 CUPOS <b>- 33 disponibles</b></small>
+                <small>
+                    <span id="countdown-price"></span>/100 CUPOS <b
+                        >- <span id="available"></span> disponibles</b
+                    ></small
+                >
             </div>
         </CrdBasic>
     </div>
 </section>
+
+<script>
+    window.addEventListener("counter", ((event: CustomEvent) => {
+        const value = event.detail.value;
+        const span = document.getElementById("countdown-price");
+        if (span) span.textContent = value;
+
+        const span2 = document.getElementById("available");
+        if (span2) span2.textContent = value;
+    }) as EventListener);
+</script>
 
 <style>
     .price-section {
