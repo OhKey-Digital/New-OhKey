@@ -75,15 +75,14 @@ const benefitsList: BenefitCard[] = [
         .benefits__grid {
             width: 100%;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 0.5rem;
             margin-top: 1rem;
-            align-items: stretch;
 
             .benefits__card {
-                flex: 0 1 calc(50% - 1rem);
+                width: 12rem;
                 display: flex;
                 flex-direction: column;
                 gap: 0.5rem;
@@ -101,6 +100,11 @@ const benefitsList: BenefitCard[] = [
                 @media (min-width: 768px) {
                     flex: 0 1 12rem;
                 }
+            }
+
+            @media (min-width: 1024px) {
+                flex-direction: row;
+                align-items: stretch;
             }
         }
     }
