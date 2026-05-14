@@ -2,6 +2,7 @@
 import BtnBasic from "../shared/button/BtnBasic.astro";
 import CrdBasic from "../shared/card/CrdBasic.astro";
 import SvgSingle from "../shared/svg/SvgSingle.astro";
+import SvgSprite from "../shared/svg/SvgSprite.astro";
 
 interface HeroCard {
     title: string;
@@ -30,7 +31,7 @@ const statsInfo: HeroCard[] = [
 
 <section class="hero-section">
     <SvgSingle name="logo" width="10rem" />
-    
+
     <h1 class="hero__title">
         Aprende a <span>vender por<br /> Meta Ads </span> sin desperdiciar<br /> dinero,
         <span>incluso con<br /> presupuesto limitado.</span>
@@ -43,13 +44,35 @@ const statsInfo: HeroCard[] = [
     </p>
 
     <ul class="hero__features">
-        <li>Fundamentos de Marketing que funcionan</li>
-        <li>Estrategias prácticas - sin tecnicismos innecesarios</li>
-        <li>Bonos gratuitos que uso con mis clientes</li>
+        <li>
+            <SvgSprite name="arrow" size="0.8rem" color="white" class="arrow" /> Fundamentos
+            de Marketing que funcionan
+        </li>
+        <li>
+            <SvgSprite
+                name="arrow"
+                size="0.8rem"
+                color="white"
+                class="arrow"
+            />Estrategias prácticas - sin tecnicismos innecesarios
+        </li>
+        <li>
+            <SvgSprite
+                name="arrow"
+                size="0.8rem"
+                color="white"
+                class="arrow"
+            />Bonos gratuitos que uso con mis clientes
+        </li>
     </ul>
 
     <div class="hero__cta-group">
-        <BtnBasic bgColor="#303099" txColor="white" href="https://wa.me/593982422500" target="_blank">
+        <BtnBasic
+            bgColor="#303099"
+            txColor="white"
+            href="https://wa.me/593982422500"
+            target="_blank"
+        >
             QUIERO DOMINAR META ADS
         </BtnBasic>
         <small class="hero__cta-caption">ACCESO DE POR VIDA</small>
@@ -94,17 +117,19 @@ const statsInfo: HeroCard[] = [
         }
 
         .hero__features {
-            max-width: 17rem;
+            max-width: 18rem;
+
+            .arrow {
+                background-color: var(--color-primary);
+                border-radius: 2rem;
+                margin-right: 0.2rem;
+            }
         }
 
         .hero__cta-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-
-            .hero__cta-caption {
-                /* Estilos para "ACCESO DE POR VIDA" */
-            }
         }
 
         .hero__stats-grid {
