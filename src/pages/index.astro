@@ -1,4 +1,5 @@
 ---
+import WhatsApp from "../components/global/WhatsApp.astro";
 import About from "../components/section/About.astro";
 import Benefit from "../components/section/Benefit.astro";
 import Failure from "../components/section/Failure.astro";
@@ -13,6 +14,7 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout>
 	<Hero />
+  <WhatsApp/>
 	<Benefit />
 	<Failure />
 	<Target/>
@@ -22,3 +24,22 @@ import Layout from "../layouts/Layout.astro";
 	<QyA/>
 	<Goodbye/>
 </Layout>
+
+<script>
+  const START_DATE = new Date("2026-05-14T00:00:00");
+  const MAX_VALUE = 100;
+
+  function updateCounter() {
+    const now = new Date();
+
+    const diffInMs = now.getTime() - START_DATE.getTime();
+    const daysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    const currentValue = MAX_VALUE - (daysPassed % MAX_VALUE);
+
+	const event = new CustomEvent("counter", {detail: {value: currentValue}});
+    window.dispatchEvent(event);
+  }
+
+  document.addEventListener("DOMContentLoaded", updateCounter)
+</script>
