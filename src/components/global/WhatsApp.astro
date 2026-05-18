@@ -3,16 +3,40 @@ import SvgSprite from "../shared/svg/SvgSprite.astro";
 ---
 
 <a class="bubble" href="https://wa.me/593982422500" target="_blank">
-    <SvgSprite name="whatsapp" size="2rem"/>
+    <p>¿Tienes preguntas?</p>
+    <div class="wts">
+        <SvgSprite name="whatsapp" size="1.2rem" />
+    </div>
 </a>
 
 <style>
-    .bubble{
+    .bubble {
+        display: flex;
+        align-items: center;
         position: fixed;
+        gap: 0.5rem;
         bottom: 1.5rem;
         right: 1.5rem;
         z-index: 100;
 
-        filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.4));
+        p {
+            font-size: var(--fs-small);
+            background-color: #66e066;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+            transition: filter 0.2s ease-in-out;
+
+            &:hover{
+                 filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.4));
+            }
+        }
+
+        .wts {
+            background-color: #66e066;
+            padding: 0.5rem;
+            border-radius: 50%;
+            filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.4));
+        }
     }
 </style>
