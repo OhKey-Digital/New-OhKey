@@ -90,9 +90,7 @@ const failuresList: FailureCard[] = [
         .failures__grid {
             width: 100%;
             display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 0.5rem;
             padding-top: 1rem;
             align-items: stretch;
@@ -119,11 +117,13 @@ const failuresList: FailureCard[] = [
                     margin-inline: auto;
                     flex-grow: 1;
                 }
+            }
 
-                @media (min-width: 768px) {
-                    width: 45%;
-                    max-width: 20rem;
-                }
+            @media (min-width: 768px) {
+                max-width: 42rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                justify-content: center;
             }
         }
     }
