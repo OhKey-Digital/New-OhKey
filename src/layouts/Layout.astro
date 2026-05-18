@@ -4,6 +4,8 @@ import Navbar from "../components/global/Navbar.astro";
 
 import "../styles/reset.css";
 import "../styles/variables.css";
+
+const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 ---
 
 <!doctype html>
@@ -15,13 +17,55 @@ import "../styles/variables.css";
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="canonical" href="https://ohkeydigital.com" />
 		<meta
+			name="facebook-domain-verification"
+			content="8b977xy9ew64vn753rt8q678dju7k5"
+		/>
+		<meta
 			name="description"
 			content="Estrategia digital, copywriting y optimización para tu negocio."
 		/>
 		<meta name="generator" content={Astro.generator} />
 		<title>OhKey | Estrategia Digital</title>
+
+		<!-- Meta Pixel Code -->
+		<script is:inline data-pixel-id={pixelId}>
+			!(function (f, b, e, v, n, t, s) {
+				if (f.fbq) return;
+				n = f.fbq = function () {
+					n.callMethod
+						? n.callMethod.apply(n, arguments)
+						: n.queue.push(arguments);
+				};
+				if (!f._fbq) f._fbq = n;
+				n.push = n;
+				n.loaded = !0;
+				n.version = "2.0";
+				n.queue = [];
+				t = b.createElement(e);
+				t.async = !0;
+				t.src = v;
+				s = b.getElementsByTagName(e)[0];
+				s.parentNode.insertBefore(t, s);
+			})(
+				window,
+				document,
+				"script",
+				"https://connect.facebook.net/en_US/fbevents.js",
+			);
+			fbq("init", "782341138085266");
+			fbq("track", "PageView");
+		</script>
 	</head>
 	<body>
+		<noscript
+			><img
+				height="1"
+				width="1"
+				style="display:none"
+				src="https://www.facebook.com/tr?id=782341138085266&ev=PageView&noscript=1"
+			/></noscript
+		>
+
 		<Navbar />
 		<slot />
 		<Footer />
