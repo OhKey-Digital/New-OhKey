@@ -27,8 +27,13 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 		<meta name="generator" content={Astro.generator} />
 		<title>OhKey | Estrategia Digital</title>
 
-		<!-- Meta Pixel Code -->
-		<script is:inline data-pixel-id={pixelId}>
+		<!-- Meta Pixel Code & Googgle Analytics -->
+		<script
+			is:inline
+			data-pixel-id={pixelId}
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-C994B14N7P"
+		>
 			!(function (f, b, e, v, n, t, s) {
 				if (f.fbq) return;
 				n = f.fbq = function () {
@@ -54,8 +59,17 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 			);
 			fbq("init", "782341138085266");
 			fbq("track", "PageView");
+
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-C994B14N7P");
 		</script>
 	</head>
+
 	<body>
 		<noscript
 			><img
