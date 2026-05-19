@@ -27,13 +27,8 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 		<meta name="generator" content={Astro.generator} />
 		<title>OhKey | Estrategia Digital</title>
 
-		<!-- Meta Pixel Code & Googgle Analytics -->
-		<script
-			is:inline
-			data-pixel-id={pixelId}
-			async
-			src="https://www.googletagmanager.com/gtag/js?id=G-C994B14N7P"
-		>
+		<!-- Meta Pixel Code -->
+		<script is:inline data-pixel-id={pixelId}>
 			!(function (f, b, e, v, n, t, s) {
 				if (f.fbq) return;
 				n = f.fbq = function () {
@@ -59,14 +54,22 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 			);
 			fbq("init", "782341138085266");
 			fbq("track", "PageView");
+		</script>
 
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("js", new Date());
-
-			gtag("config", "G-C994B14N7P");
+		<script is:inline>
+			(function (w, d, s, l, i) {
+				w[l] = w[l] || [];
+				w[l].push({
+					"gtm.start": new Date().getTime(),
+					event: "gtm.js",
+				});
+				var f = d.getElementsByTagName(s)[0],
+					j = d.createElement(s),
+					dl = l != "dataLayer" ? "&l=" + l : "";
+				j.async = true;
+				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+				f.parentNode.insertBefore(j, f);
+			})(window, document, "script", "dataLayer", "GTM-W7LZPHR6");
 		</script>
 	</head>
 
@@ -80,6 +83,13 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 			/></noscript
 		>
 
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-W7LZPHR6"
+				height="0"
+				width="0"
+				style="display:none;visibility:hidden"></iframe></noscript
+		>
 		<Navbar />
 		<slot />
 		<Footer />
