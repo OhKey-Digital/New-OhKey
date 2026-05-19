@@ -2,12 +2,52 @@
 import SvgSprite from "../shared/svg/SvgSprite.astro";
 ---
 
-<a class="bubble" href="https://wa.me/593982422500" target="_blank">
+<a
+    class="bubble"
+    id="wa-bubble"
+    href="https://wa.me/593982422500"
+    target="_blank"
+>
     <p>¿Tienes preguntas?</p>
     <div class="wts">
         <SvgSprite name="whatsapp" size="1.2rem" />
     </div>
 </a>
+
+<script is:inline>
+    document
+        .getElementById(".wa-bubble")
+        .addEventListener("click", async () => {
+            const id = "evt_" + Date.now();
+            const url = window.location.href;
+
+            if (typeof window.fbq !== "undefined") {
+                window.fbq(
+                    "track",
+                    "Contact",
+                    {
+                        content_name: "Contacto WhatsApp",
+                    },
+                    { eventID: id },
+                );
+            }
+
+            try {
+                await fetch("/api/track", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        eventName: "Contact",
+                        eventId: id,
+                        url: url,
+                        userAgent: navigator.userAgent,
+                    }),
+                });
+            } catch (e) {
+                console.error("Error en CAPI:", e);
+            }
+        });
+</script>
 
 <style>
     .bubble {
@@ -27,8 +67,8 @@ import SvgSprite from "../shared/svg/SvgSprite.astro";
             border-radius: 0.5rem;
             transition: filter 0.2s ease-in-out;
 
-            &:hover{
-                 filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.4));
+            &:hover {
+                filter: drop-shadow(0rem 0rem 0.2rem rgba(0, 0, 0, 0.4));
             }
         }
 
