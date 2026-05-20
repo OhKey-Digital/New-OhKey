@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "astro/types";
 
 interface BaseProps {
-    variant?: "base";
+    variant?: "none" | "base";
     size?: "sm" | "md" | "lg";
     bgColor?: string;
     txColor?: string;
@@ -47,6 +47,41 @@ const inlineStyles = {
     <slot />
 </Tag>
 
+<script is:inline>
+    document.querySelectorAll("btn").forEach((button) => {
+        button.addEventListener("click", async () => {
+            const id = "evt_" + Date.now();
+            const url = window.location.href;
+
+            if (typeof window.fbq !== "undefined") {
+                window.fbq(
+                    "track",
+                    "Contact",
+                    {
+                        content_name: "Contacto WhatsApp",
+                    },
+                    { eventID: id },
+                );
+            }
+
+            try {
+                await fetch("/api/track", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        eventName: "Contact",
+                        eventId: id,
+                        url: url,
+                        userAgent: navigator.userAgent,
+                    }),
+                });
+            } catch (e) {
+                console.error("Error en CAPI:", e);
+            }
+        });
+    });
+</script>
+
 <style>
     .btn {
         display: flex;
@@ -56,6 +91,10 @@ const inlineStyles = {
     }
 
     /* Variants */
+    .none {
+        background-color: transparent;
+    }
+
     .variant-base {
         background-color: var(--bg-color, white);
         color: var(--tx-color, var(--color-tertiary));
