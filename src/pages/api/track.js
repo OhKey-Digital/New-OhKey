@@ -1,3 +1,5 @@
+export const prerender = false;
+
 export const POST = async ({ request }) => {
     try {
         const body = await request.json();
