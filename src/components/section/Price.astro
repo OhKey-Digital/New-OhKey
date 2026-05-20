@@ -2,134 +2,164 @@
 import BtnBasic from "../shared/button/BtnBasic.astro";
 import CrdBasic from "../shared/card/CrdBasic.astro";
 
-const cardDetail: Array<string> = [
-    "40 horas de contenido en 10 módulos",
-    "Clases en vivo jueves, viernes, sábado 18:00",
-    "Grabaciones permanentes",
-    "+20 plantillas profesionales de OhKey",
-    "Grupo Facebook + comunidad WhatsApp",
-    "Acceso de por vida + actualizaciones",
-    "Cursos futuros con descuento",
-    "2 clases grabadas para los 20 primeros inscritos",
+interface priceCard {
+  priceFull: string;
+  priceOff: string;
+  list: Array<string>;
+}
+
+const cardDetail: priceCard[] = [
+  {
+    priceFull: "$80 USD",
+    priceOff: "$60",
+    list: [
+      "40 horas de contenido en 10 módulos",
+      "Clases en vivo Mier/Jueves/Vier 18:00",
+      "Grabaciones permanentes",
+      "+20 plantillas profesionales de OhKey",
+      "Grupo Facebook + comunidad WhatsApp",
+      "Acceso de por vida + actualizaciones",
+    ],
+  },
+  {
+    priceFull: "$150 USD",
+    priceOff: "$120",
+    list: [
+      "1:1 Tutorías 8 horas - Investigación profunda de tu mercado / Creación de estrategia / creación de campañas / Optimización",
+      "40 horas de contenido en 10 módulos",
+      "Clases en vivo Mier/Jueves/Vier 18:00",
+      "Grabaciones permanentes",
+      "+20 plantillas profesionales de OhKey",
+      "Grupo Facebook + comunidad WhatsApp",
+      "Acceso de por vida + actualizaciones",
+      "Cursos futuros con descuento",
+    ],
+  },
 ];
 ---
 
 <section class="price-section reveal">
-    <small class="price__label">INVERSIÓN</small>
-    <h2 class="price__heading">$60 hoy. Después, $120.</h2>
-    <p class="price__description">
-        En 2 semanas si te dedicas, o en 2-3 meses con calma.
-    </p>
-
-    <div class="price__card-container">
+  {
+    cardDetail.map((item) => (
+      <div class="price__card-container">
         <CrdBasic variant="none">
-            <small class="price-after">$120 USD</small>
-            <p class="price-now">$60</p>
-            <p class="price-now-detail">USD - PAGO ÚNICO</p>
+          <small class="price-after">{item.priceFull}</small>
+          <p class="price-now">{item.priceOff}</p>
+          <p class="price-now-detail">USD - PAGO ÚNICO</p>
 
-            <ul class="price-benefit-list">
-                {cardDetail.map((item) => <li>{item}</li>)}
-            </ul>
+          <ul class="price-benefit-list">
+            {item.list.map((li) => (
+              <li>{li}</li>
+            ))}
+          </ul>
 
-            <div class="price__cta-group">
-                <BtnBasic
-                    bgColor="#303099"
-                    txColor="white"
-                    href="https://wa.me/593982422500"
-                    target="_blank"
-                >
-                    QUIERO DOMINAR META ADS
-                </BtnBasic>
-                <small>
-                    <span id="countdown-price"></span>/100 CUPOS <b
-                        >- <span id="available"></span> disponibles</b
-                    ></small
-                >
-            </div>
+          <BtnBasic
+            bgColor="#303099"
+            txColor="white"
+            href="https://wa.me/593982422500"
+            target="_blank"
+          >
+            QUIERO DOMINAR META ADS
+          </BtnBasic>
         </CrdBasic>
-    </div>
+      </div>
+    ))
+  }
+
+  <small class="counter">
+    <span id="countdown-price"></span>/100 CUPOS <b
+      >- <span id="available"></span> disponibles</b
+    ></small
+  >
 </section>
 
 <script>
-    window.addEventListener("counter", ((event: CustomEvent) => {
-        const value = event.detail.value;
-        const span = document.getElementById("countdown-price");
-        if (span) span.textContent = value;
+  window.addEventListener("counter", ((event: CustomEvent) => {
+    const value = event.detail.value;
+    const span = document.getElementById("countdown-price");
+    if (span) span.textContent = value;
 
-        const span2 = document.getElementById("available");
-        if (span2) span2.textContent = value;
-    }) as EventListener);
+    const span2 = document.getElementById("available");
+    if (span2) span2.textContent = value;
+  }) as EventListener);
 </script>
 
 <style>
-    .price-section {
+  .price-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr auto;
+    justify-items: center;
+    text-align: center;
+    color: white;
+    background-color: var(--color-primary);
+    font-size: var(--fs-small);
+    padding: 2rem 4%;
+    gap: 2rem;
+
+    .price__card-container {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      width: fit-content;
+      height: 100%;
+      background-color: var(--color-quaternary);
+
+      .card {
+        background-color: white;
+        color: var(--color-primary);
+        max-width: 15rem;
+        height: 100%;
+        justify-content: center;
+      }
+
+      .price-after {
+        text-decoration: line-through;
+        font-weight: var(--fw-light);
+      }
+
+      .price-now {
+        font-weight: var(--fw-black);
+        font-size: 4rem;
+      }
+
+      .price-now-detail {
+        font-weight: var(--fw-light);
+      }
+
+      .price-benefit-list {
+        list-style: disc;
+        text-align: start;
+        padding: 0.5rem 0rem 1rem 1rem;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: white;
-        background-color: var(--color-primary);
-        font-size: var(--fs-small);
-        padding: 2rem 4%;
-
-        .price__label {
-            font-size: var(--fs-small);
-            font-weight: var(--fw-bold);
-        }
-
-        .price__heading {
-            max-width: 20rem;
-            font-size: var(--fs-h3);
-            font-weight: var(--fw-black);
-        }
-
-        .price__description {
-            font-size: var(--fs-body);
-        }
-
-        .price__card-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            background-color: var(--color-quaternary);
-
-            .card {
-                background-color: white;
-                color: var(--color-primary);
-                max-width: 16rem;
-            }
-
-            .price-after {
-                text-decoration: line-through;
-                font-weight: var(--fw-light);
-            }
-
-            .price-now {
-                font-weight: var(--fw-black);
-                font-size: 4rem;
-            }
-
-            .price-now-detail {
-                font-weight: var(--fw-light);
-            }
-
-            .price-benefit-list {
-                list-style: disc;
-                text-align: start;
-                padding: 0.5rem 0rem 1rem 1rem;
-                display: flex;
-                flex-direction: column;
-                gap: 0.2rem;
-            }
-
-            .price__cta-group {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
+        gap: 0.2rem;
+      }
     }
+
+    .counter {
+      font-size: var(--fs-body);
+    }
+
+    @media (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr auto;
+
+      .price__card-container {
+        &:nth-child(1) {
+          justify-self: end;
+        }
+
+        &:nth-child(2) {
+          justify-self: start;
+        }
+      }
+
+      .counter {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+    }
+  }
 </style>
