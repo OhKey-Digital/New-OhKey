@@ -6,6 +6,7 @@ interface priceCard {
   priceFull: string;
   priceOff: string;
   list: Array<string>;
+  btn: string;
 }
 
 const cardDetail: priceCard[] = [
@@ -13,27 +14,29 @@ const cardDetail: priceCard[] = [
     priceFull: "$80 USD",
     priceOff: "$60",
     list: [
-      "40 horas de contenido en 10 módulos",
+      "10 módulos",
       "Clases en vivo Mier/Jueves/Vier 18:00",
       "Grabaciones permanentes",
       "+20 plantillas profesionales de OhKey",
-      "Grupo Facebook + comunidad WhatsApp",
+      "Comunidad WhatsApp",
       "Acceso de por vida + actualizaciones",
     ],
+    btn: "ACCEDER AHORA",
   },
   {
     priceFull: "$150 USD",
     priceOff: "$120",
     list: [
       "1:1 Tutorías 8 horas - Investigación profunda de tu mercado / Creación de estrategia / creación de campañas / Optimización",
-      "40 horas de contenido en 10 módulos",
+      "10 módulos",
       "Clases en vivo Mier/Jueves/Vier 18:00",
       "Grabaciones permanentes",
       "+20 plantillas profesionales de OhKey",
-      "Grupo Facebook + comunidad WhatsApp",
+      "Comunidad WhatsApp",
       "Acceso de por vida + actualizaciones",
       "Cursos futuros con descuento",
     ],
+    btn: "QUIERO MI EXPERIENCIA PRO",
   },
 ];
 ---
@@ -59,7 +62,7 @@ const cardDetail: priceCard[] = [
             href="https://wa.me/593982422500"
             target="_blank"
           >
-            QUIERO DOMINAR META ADS
+            {item.btn}
           </BtnBasic>
         </CrdBasic>
       </div>
@@ -134,6 +137,12 @@ const cardDetail: priceCard[] = [
         display: flex;
         flex-direction: column;
         gap: 0.2rem;
+      }
+
+      &:nth-child(2) {
+        .price-benefit-list li:first-child {
+          font-weight: var(--fw-black);
+        }
       }
     }
 
