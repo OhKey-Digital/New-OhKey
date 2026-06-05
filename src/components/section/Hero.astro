@@ -30,11 +30,28 @@ const statsInfo: HeroCard[] = [
 ---
 
 <section class="hero-section">
-  <SvgSingle name="logo" width="10rem" />
+  <div class="hero__logo">
+    <SvgSingle name="logo" width="10rem" />
+  </div>
 
+  <!-- Título con estructura de máscara: cada line__inner se revela
+       deslizándose hacia arriba desde debajo de su overflow:hidden padre -->
   <h1 class="hero__title">
-    El primer curso de <span>Meta Ads en Ecuador</span> diseñado para quien empieza desde $50
-    — <span>aprende a hacer rendir cada dólar</span> antes de escalar.
+    <span class="hero__title-line">
+      <span class="hero__title-inner">
+        El primer curso de <em>Meta Ads en Ecuador</em>
+      </span>
+    </span>
+    <span class="hero__title-line">
+      <span class="hero__title-inner">
+        diseñado para quien empieza desde $50 —
+      </span>
+    </span>
+    <span class="hero__title-line">
+      <span class="hero__title-inner">
+        <em>aprende a hacer rendir cada dólar</em> antes de escalar.
+      </span>
+    </span>
   </h1>
 
   <p class="hero__copy">
@@ -86,6 +103,34 @@ const statsInfo: HeroCard[] = [
 </section>
 
 <style>
+  /* ── Estados iniciales (FOUC prevention) ─────────────────────── */
+  /* El título se oculta por transform (la máscara lo cubre), no opacity */
+  .hero__title-inner {
+    transform: translateY(110%);
+  }
+
+  .hero__logo,
+  .hero__copy,
+  .hero__features li,
+  .hero__cta-group,
+  .hero__stat-card {
+    opacity: 0;
+  }
+
+  /* Fallback: prefers-reduced-motion → todo visible desde el inicio */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__title-inner {
+      transform: translateY(0);
+    }
+    .hero__logo,
+    .hero__copy,
+    .hero__features li,
+    .hero__cta-group,
+    .hero__stat-card {
+      opacity: 1;
+    }
+  }
+
   .hero-section {
     display: flex;
     flex-direction: column;
@@ -101,8 +146,22 @@ const statsInfo: HeroCard[] = [
       font-size: var(--fs-h4);
       font-weight: var(--fw-black);
 
-      span {
+      em {
+        font-style: normal;
         color: var(--color-secondary);
+      }
+
+      /* Cada línea actúa como máscara: overflow:hidden oculta
+         el inner que empieza debajo del borde inferior */
+      .hero__title-line {
+        display: block;
+        overflow: hidden;
+        /* line-height generoso para que los descenders no se recorten */
+        line-height: 1.45;
+      }
+
+      .hero__title-inner {
+        display: block;
       }
     }
 

@@ -1,0 +1,87 @@
+---
+const items = [
+  "$3 → $500k manejados",
+  "+100 estudiantes",
+  "+10 años en Paid Media",
+  "Clases en vivo",
+  "Acceso de por vida",
+  "Estrategia real",
+  "Meta Ads desde $50",
+];
+---
+
+<!-- aria-hidden: el marquee es decorativo, no aporta contenido nuevo -->
+<div class="marquee" aria-hidden="true">
+  <!-- Pista duplicada para loop seamless: traducir -50% = exactamente un set -->
+  <ul class="marquee__track">
+    {
+      [...items, ...items].map((item) => (
+        <li class="marquee__item">
+          <span class="marquee__sep" aria-hidden="true">◆</span>
+          {item}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    background-color: var(--color-tertiary);
+    padding: 0.55rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .marquee__track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    animation: marquee-slide 28s linear infinite;
+    /* will-change: transform previene repaints en el scrolleo */
+    will-change: transform;
+  }
+
+  .marquee__item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--color-bg);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-bold);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    padding: 0 1.2rem;
+    text-transform: uppercase;
+  }
+
+  .marquee__sep {
+    color: var(--color-quaternary);
+    font-size: 0.45em;
+    flex-shrink: 0;
+  }
+
+  @keyframes marquee-slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* -50% = un set completo de items → loop sin salto */
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Pausa en hover (accesibilidad, interacción natural) */
+  @media (hover: hover) {
+    .marquee:hover .marquee__track {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

@@ -97,24 +97,7 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 </html>
 
 <script>
-	const observerOptions = {
-		root: null,
-		threshold: 0.1,
-	};
-
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add("active");
-				observer.unobserve(entry.target);
-			}
-		});
-	}, observerOptions);
-
-	document.addEventListener("DOMContentLoaded", () => {
-		const sections = document.querySelectorAll(".reveal");
-		sections.forEach((section) => observer.observe(section));
-	});
+	import "../scripts/animations";
 </script>
 
 <style is:global>
@@ -127,62 +110,55 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 		position: relative;
 	}
 
+	/* Elemento sobredimensionado para animar con transform (compositor-friendly)
+	   sin repaints. El 20% extra en cada lado es el margen de translación segura. */
 	body::before {
 		content: "";
 		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		top: -10%;
+		left: -10%;
+		width: 120%;
+		height: 120%;
 		z-index: -1;
 		background-image: url("../assets/png/noise.png");
 		opacity: 0.8;
 		animation: noise-move 0.5s infinite;
 		pointer-events: none;
+		will-change: transform;
 	}
 
-	.reveal {
-		opacity: 0;
-		transform: translateY(1rem);
-		transition: all 0.5s ease-in-out;
-	}
-
-	.reveal.active {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
+	/* Máx. translación ±6% → 7.2vw/vh. Margen seguro disponible: 10vw/vh → ok. */
 	@keyframes noise-move {
 		0%,
 		100% {
-			background-position: 0 0;
+			transform: translate(0, 0);
 		}
 		10% {
-			background-position: -5% -10%;
+			transform: translate(-3%, -5%);
 		}
 		20% {
-			background-position: -15% 5%;
+			transform: translate(-6%, 3%);
 		}
 		30% {
-			background-position: 7% -25%;
+			transform: translate(3%, -6%);
 		}
 		40% {
-			background-position: 20% 25%;
+			transform: translate(6%, 5%);
 		}
 		50% {
-			background-position: -25% 10%;
+			transform: translate(-5%, 4%);
 		}
 		60% {
-			background-position: 15% 5%;
+			transform: translate(5%, 2%);
 		}
 		70% {
-			background-position: 0% 15%;
+			transform: translate(0%, 5%);
 		}
 		80% {
-			background-position: 25% 35%;
+			transform: translate(6%, 6%);
 		}
 		90% {
-			background-position: -10% 10%;
+			transform: translate(-4%, 3%);
 		}
 	}
 </style>
