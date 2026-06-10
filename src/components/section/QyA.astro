@@ -3,114 +3,112 @@ import AcdBase from "../shared/accordion/AcdBase.astro";
 import SvgSprite from "../shared/svg/SvgSprite.astro";
 
 interface Card {
-    question: string;
-    answer: string;
+  question: string;
+  answer: string;
 }
 
 const cardInfo: Card[] = [
-    {
-        question:
-            "¿Puedo tomar el curso si soy principiante absoluto en Meta Ads?",
-        answer: "Sí. Empezamos desde los fundamentos de marketing que NUNCA cambian, hasta estrategias avanzadas. Es un paso a paso. Si nunca has hecho una campaña, este curso te ahorrará los errores que yo cometí los primeros años.",
-    },
-    {
-        question: "Ya tengo experiencia en Meta Ads, ¿me sirve?",
-        answer: "Sí. Diseñé esto para principiantes Y para intermedios/avanzados. Si ya lanzas campañas, aquí encontrarás frameworks para optimizar rentabilidad, estrategias de escalado sin romper lo que funciona, y cómo usar IA para crear más variedad creativa.",
-    },
-    {
-        question: "Tengo presupuesto muy pequeño ($50-100/mes), ¿sirve?",
-        answer: "Exactamente para ti. Fundé OhKey con limitaciones de presupuesto. En el curso aprenderás a estructurar de forma que cada dólar rinda más, en qué orden hacer pruebas, cuándo escalar. Con presupuesto pequeño necesitas estrategia excelente.",
-    },
-    {
-        question: "¿Cuánto tiempo tengo para ver resultados?",
-        answer: "Depende de tu aplicación. En 2-4 semanas ves patrones. En 2-3 meses, datos sólidos. Por eso el taller es accesible — tienes todo para empezar inmediatamente.",
-    },
-    {
-        question: "¿El curso se actualiza?",
-        answer: "Sí. Meta cambia cada mes. Yo actualizo el contenido regularmente. Como estudiante, tienes acceso gratis a TODAS las futuras actualizaciones. Pagas una vez, acceso de por vida.",
-    },
+  {
+    question: "¿Puedo tomar el curso si soy principiante absoluto en Meta Ads?",
+    answer:
+      "Sí. Empezamos desde los fundamentos de marketing que NUNCA cambian, hasta estrategias avanzadas. Es un paso a paso. Si nunca has hecho una campaña, este curso te ahorrará los errores que yo cometí los primeros años.",
+  },
+  {
+    question: "Ya tengo experiencia en Meta Ads, ¿me sirve?",
+    answer:
+      "Sí. Diseñé esto para principiantes Y para intermedios/avanzados. Si ya lanzas campañas, aquí encontrarás frameworks para optimizar rentabilidad, estrategias de escalado sin romper lo que funciona, y cómo usar IA para crear más variedad creativa.",
+  },
+  {
+    question: "Tengo presupuesto muy pequeño ($50-100/mes), ¿sirve?",
+    answer:
+      "Exactamente para ti. Fundé OhKey con limitaciones de presupuesto. En el curso aprenderás a estructurar de forma que cada dólar rinda más, en qué orden hacer pruebas, cuándo escalar. Con presupuesto pequeño necesitas estrategia excelente.",
+  },
+  {
+    question: "¿Cuánto tiempo tengo para ver resultados?",
+    answer:
+      "Depende de tu aplicación. En 2-4 semanas ves patrones. En 2-3 meses, datos sólidos. Por eso el taller es accesible — tienes todo para empezar inmediatamente.",
+  },
+  {
+    question: "¿El curso se actualiza?",
+    answer:
+      "Sí. Meta cambia cada mes. Yo actualizo el contenido regularmente. Como estudiante, tienes acceso gratis a TODAS las futuras actualizaciones dentro de la comunidad.",
+  },
 ];
 ---
 
 <section class="modules-section reveal">
-    <small class="modules__label">PREGUNTAS FRECUENTES</small>
-    <h2 class="modules__heading">Antes de comprar.</h2>
+  <small class="modules__label">PREGUNTAS FRECUENTES</small>
+  <h2 class="modules__heading">Antes de comprar.</h2>
 
-    <div class="modules__accordion-group">
-        {
-            cardInfo.map((item) => (
-                <AcdBase>
-                    <div slot="summary" class="modules__accordion-summary">
-                        <h3 class="modules__accordion-title">
-                            {item.question}
-                        </h3>
-                        <SvgSprite
-                            name="addition"
-                            size="0.5rem"
-                            class="addition"
-                        />
-                    </div>
-                    <p slot="content" class="modules__points">
-                        {item.answer}
-                    </p>
-                </AcdBase>
-            ))
-        }
-    </div>
+  <div class="modules__accordion-group">
+    {
+      cardInfo.map((item) => (
+        <AcdBase>
+          <div slot="summary" class="modules__accordion-summary">
+            <h3 class="modules__accordion-title">{item.question}</h3>
+            <SvgSprite name="addition" size="0.5rem" class="addition" />
+          </div>
+          <p slot="content" class="modules__points">
+            {item.answer}
+          </p>
+        </AcdBase>
+      ))
+    }
+  </div>
 </section>
 
 <style>
-    .modules-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: var(--color-primary);
-        font-size: var(--fs-small);
-        padding: 2rem 4%;
+  .modules-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-primary);
+    font-size: var(--fs-small);
+    padding: 2rem 4%;
 
-        .modules__label {
-            font-size: var(--fs-small);
-            font-weight: var(--fw-bold);
-        }
-
-        .modules__heading {
-            max-width: 14rem;
-            font-size: var(--fs-h3);
-            font-weight: var(--fw-black);
-        }
-
-        .modules__accordion-group {
-            width: 100%;
-            max-width: 30rem;
-            margin-top: 1rem;
-
-            .modules__accordion-summary {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                .modules__accordion-title {
-                    font-weight: var(--fw-bold);
-                }
-
-                .addition {
-                    width: 0.5rem;
-                    height: 0.5rem;
-                    padding: 0.2rem;
-                    color: white;
-                    border-radius: 50%;
-                    background-color: var(--color-tertiary);
-
-                    transition: transform 0.5s ease;
-                }
-            }
-
-            .modules__points {
-                text-align: left;
-                margin-top: 0.5rem;
-            }
-        }
+    .modules__label {
+      font-size: var(--fs-small);
+      font-weight: var(--fw-bold);
     }
+
+    .modules__heading {
+      max-width: 14rem;
+      font-size: var(--fs-h3);
+      font-weight: var(--fw-black);
+    }
+
+    .modules__accordion-group {
+      width: 100%;
+      max-width: 30rem;
+      margin-top: 1rem;
+
+      .modules__accordion-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .modules__accordion-title {
+          font-weight: var(--fw-bold);
+        }
+
+        .addition {
+          width: 0.5rem;
+          height: 0.5rem;
+          padding: 0.2rem;
+          color: white;
+          border-radius: 50%;
+          background-color: var(--color-tertiary);
+
+          transition: transform 0.5s ease;
+        }
+      }
+
+      .modules__points {
+        text-align: left;
+        margin-top: 0.5rem;
+      }
+    }
+  }
 </style>
