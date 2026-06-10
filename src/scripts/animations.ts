@@ -20,13 +20,13 @@ function init() {
       const yFull   = isDesktop ? 40 : 20;
       const stagger = isDesktop ? 0.12 : 0.07;
 
-      // ── HERO (above the fold, sin ScrollTrigger) ──────────────────────
-      // Logo
+      // ── HERO (above the fold, animación por CARGA — sin ScrollTrigger) ──
+      // Esta intro es fiable en móvil porque NO depende del scroll ni del
+      // cálculo de viewport: se dispara una vez al cargar la página.
       gsap.set('.hero__logo',        { opacity: 0, scale: 0.88 });
       // Título: los inners ya empiezan a translateY(110%) por CSS;
       // gsap.set confirma el estado para que el contexto pueda revertirlo limpiamente
       gsap.set('.hero__title-inner', { y: '110%' });
-      // Resto de elementos
       gsap.set('.hero__copy',        { opacity: 0, y: yFull * 0.7 });
       gsap.set('.hero__features li', { opacity: 0, x: -20 });
       gsap.set('.hero__cta-group',   { opacity: 0, scale: 0.9 });
@@ -38,7 +38,7 @@ function init() {
           opacity: 1, scale: 1,
           duration: 0.7, ease: 'power3.out',
         })
-        // Título: reveal line a line desde debajo de la máscara (efecto luxury)
+        // Título: reveal línea a línea desde debajo de la máscara
         .to('.hero__title-inner', {
           y: 0,
           duration: isDesktop ? 1.1 : 0.8,
@@ -68,19 +68,28 @@ function init() {
           stagger,
         }, '-=0.2');
 
-      // Paralaje sutil en stats al salir del hero (solo desktop)
-      if (isDesktop) {
-        gsap.to('.hero__stats-grid', {
-          y: -35,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '.hero-section',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1.8,
-          },
-        });
-      }
+      // ── CORTE MÓVIL ───────────────────────────────────────────────────
+      // En móvil terminamos aquí. NO usamos ScrollTrigger: el viewport
+      // táctil es inestable (barra de direcciones que aparece/desaparece)
+      // y los cálculos de posición fallan, dejando secciones invisibles
+      // hasta forzar un recálculo. El contenido queda visible y estático.
+      if (!isDesktop) return;
+
+      // ════════════════════════════════════════════════════════════════
+      //  DESKTOP ONLY — animaciones de scroll (viewport estable y fiable)
+      // ════════════════════════════════════════════════════════════════
+
+      // Paralaje sutil en stats al salir del hero
+      gsap.to('.hero__stats-grid', {
+        y: -35,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.8,
+        },
+      });
 
       // ── HEADINGS por sección ──────────────────────────────────────────
       type SectionDef = { el: string; children: string[] };
@@ -129,7 +138,7 @@ function init() {
         });
       });
 
-      // ── BATCH CARDS con blur cinematográfico (desktop) ────────────────
+      // ── BATCH CARDS con blur cinematográfico ──────────────────────────
       // blur(6px) → blur(0) da profundidad de campo al reveal; clearProps
       // libera la capa de composición GPU tras completar la animación.
       const batchReveal = (
@@ -137,25 +146,17 @@ function init() {
         yAmt: number,
         overrides?: Partial<gsap.TweenVars>,
       ) => {
-        const initProps: gsap.TweenVars = { opacity: 0, y: yAmt };
-        if (isDesktop) { initProps.scale = 0.96; initProps.filter = 'blur(6px)'; }
-
-        const toProps: gsap.TweenVars = {
-          opacity: 1, y: 0,
-          duration: dur + 0.1,
-          ease: 'power2.out',
-          stagger,
-          ...overrides,
-        };
-        if (isDesktop) {
-          toProps.scale = 1;
-          toProps.filter = 'blur(0px)';
-          toProps.clearProps = 'filter';
-        }
-
-        gsap.set(selector, initProps);
+        gsap.set(selector, { opacity: 0, y: yAmt, scale: 0.96, filter: 'blur(6px)' });
         ScrollTrigger.batch(selector, {
-          onEnter: els => gsap.to(els, toProps),
+          onEnter: els =>
+            gsap.to(els, {
+              opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+              duration: dur + 0.1,
+              ease: 'power2.out',
+              stagger,
+              clearProps: 'filter',
+              ...overrides,
+            }),
           start: 'top 92%',
           once: true,
         });
@@ -166,21 +167,16 @@ function init() {
       batchReveal('.target__card',   22);
 
       // Precio: overshoot + blur para máximo impacto
-      const priceInit: gsap.TweenVars = { opacity: 0, y: 32, scale: 0.94 };
-      const priceTo: gsap.TweenVars = {
-        opacity: 1, y: 0, scale: 1,
-        duration: dur + 0.2,
-        ease: 'back.out(1.3)',
-        stagger: stagger * 1.2,
-      };
-      if (isDesktop) {
-        priceInit.filter = 'blur(8px)';
-        priceTo.filter = 'blur(0px)';
-        priceTo.clearProps = 'filter';
-      }
-      gsap.set('.price__card-container', priceInit);
+      gsap.set('.price__card-container', { opacity: 0, y: 32, scale: 0.94, filter: 'blur(8px)' });
       ScrollTrigger.batch('.price__card-container', {
-        onEnter: els => gsap.to(els, priceTo),
+        onEnter: els =>
+          gsap.to(els, {
+            opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+            duration: dur + 0.2,
+            ease: 'back.out(1.3)',
+            stagger: stagger * 1.2,
+            clearProps: 'filter',
+          }),
         start: 'top 90%',
         once: true,
       });
@@ -191,29 +187,25 @@ function init() {
         onEnter: els =>
           gsap.to(els, {
             opacity: 1, x: 0,
-            duration: isDesktop ? 0.5 : 0.35,
-            ease: 'power2.out',
-            stagger: isDesktop ? 0.06 : 0.04,
+            duration: 0.5, ease: 'power2.out', stagger: 0.06,
           }),
         start: 'top 95%',
         once: true,
       });
 
       // ── ABOUT: retrato, frases y firma ────────────────────────────────
-      const portraitInit: gsap.TweenVars = { opacity: 0, scale: 1.05 };
-      const portraitTo: gsap.TweenVars   = { opacity: 1, scale: 1, duration: 1.0, ease: 'power2.out' };
-      if (isDesktop) {
-        portraitInit.filter = 'blur(10px)';
-        portraitTo.filter   = 'blur(0px)';
-        portraitTo.clearProps = 'filter';
-      }
-      gsap.set('.about__portrait--mobile, .about__portrait--desktop', portraitInit);
+      gsap.set('.about__portrait--mobile, .about__portrait--desktop', {
+        opacity: 0, scale: 1.05, filter: 'blur(10px)',
+      });
       ScrollTrigger.create({
         trigger: '.about-section',
         start: 'top 90%',
         once: true,
         onEnter: () =>
-          gsap.to('.about__portrait--mobile, .about__portrait--desktop', portraitTo),
+          gsap.to('.about__portrait--mobile, .about__portrait--desktop', {
+            opacity: 1, scale: 1, filter: 'blur(0px)',
+            duration: 1.0, ease: 'power2.out', clearProps: 'filter',
+          }),
       });
 
       gsap.set('.about__phrase', { opacity: 0, y: 18 });
@@ -251,95 +243,61 @@ function init() {
           }),
       });
 
-      // ── MAGNÉTICO + ESCALA (solo desktop) ────────────────────────────
-      if (isDesktop) {
-        // Efecto magnético en CTAs principales: el botón sigue el cursor
-        // con elastic snap-back al salir — sensación física premium
-        const magneticBtns = document.querySelectorAll<HTMLElement>(
-          '.hero__cta-group .btn, .modules__cta .btn, .goodbye .btn',
-        );
-        magneticBtns.forEach(btn => {
-          btn.style.cursor = 'pointer';
+      // ── MAGNÉTICO + ESCALA + HOVER ────────────────────────────────────
+      // Efecto magnético en CTAs principales: el botón sigue el cursor
+      // con elastic snap-back al salir — sensación física premium
+      const magneticBtns = document.querySelectorAll<HTMLElement>(
+        '.hero__cta-group .btn, .modules__cta .btn, .goodbye .btn',
+      );
+      magneticBtns.forEach(btn => {
+        btn.style.cursor = 'pointer';
 
-          btn.addEventListener('mousemove', (e: MouseEvent) => {
-            const r  = btn.getBoundingClientRect();
-            const cx = r.left + r.width  / 2;
-            const cy = r.top  + r.height / 2;
-            gsap.to(btn, {
-              x: (e.clientX - cx) * 0.32,
-              y: (e.clientY - cy) * 0.32,
-              duration: 0.4,
-              ease: 'power2.out',
-              overwrite: 'auto',
-            });
-          });
-
-          btn.addEventListener('mouseleave', () => {
-            gsap.to(btn, {
-              x: 0, y: 0,
-              duration: 0.75,
-              ease: 'elastic.out(1, 0.42)',
-              overwrite: 'auto',
-            });
+        btn.addEventListener('mousemove', (e: MouseEvent) => {
+          const r  = btn.getBoundingClientRect();
+          const cx = r.left + r.width  / 2;
+          const cy = r.top  + r.height / 2;
+          gsap.to(btn, {
+            x: (e.clientX - cx) * 0.32,
+            y: (e.clientY - cy) * 0.32,
+            duration: 0.4,
+            ease: 'power2.out',
+            overwrite: 'auto',
           });
         });
 
-        // Escala en todos los botones (incluye los magnéticos — x/y y scale no colisionan)
-        document.querySelectorAll<HTMLElement>('.btn').forEach(btn => {
-          const toScale = gsap.quickTo(btn, 'scale', { duration: 0.22, ease: 'power2.out' });
-          btn.addEventListener('mouseenter', () => toScale(1.07));
-          btn.addEventListener('mouseleave', () => toScale(1));
-        });
-
-        // Hover en tarjetas: levitar + escala sutil
-        document
-          .querySelectorAll<HTMLElement>('.benefits__card, .target__card, .failures__card')
-          .forEach(card => {
-            const toScale = gsap.quickTo(card, 'scale', { duration: 0.32, ease: 'power2.out' });
-            const toY     = gsap.quickTo(card, 'y',     { duration: 0.32, ease: 'power2.out' });
-            card.addEventListener('mouseenter', () => { toScale(1.04); toY(-6); });
-            card.addEventListener('mouseleave', () => { toScale(1);    toY(0);  });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, {
+            x: 0, y: 0,
+            duration: 0.75,
+            ease: 'elastic.out(1, 0.42)',
+            overwrite: 'auto',
           });
-      }
+        });
+      });
+
+      // Escala en todos los botones (incluye los magnéticos — x/y y scale no colisionan)
+      document.querySelectorAll<HTMLElement>('.btn').forEach(btn => {
+        const toScale = gsap.quickTo(btn, 'scale', { duration: 0.22, ease: 'power2.out' });
+        btn.addEventListener('mouseenter', () => toScale(1.07));
+        btn.addEventListener('mouseleave', () => toScale(1));
+      });
+
+      // Hover en tarjetas: levitar + escala sutil
+      document
+        .querySelectorAll<HTMLElement>('.benefits__card, .target__card, .failures__card')
+        .forEach(card => {
+          const toScale = gsap.quickTo(card, 'scale', { duration: 0.32, ease: 'power2.out' });
+          const toY     = gsap.quickTo(card, 'y',     { duration: 0.32, ease: 'power2.out' });
+          card.addEventListener('mouseenter', () => { toScale(1.04); toY(-6); });
+          card.addEventListener('mouseleave', () => { toScale(1);    toY(0);  });
+        });
     },
   );
 
-  // ── REFRESH + RED DE SEGURIDAD ──────────────────────────────────────
-  // En móvil el layout se estabiliza tarde (fuentes, imágenes, barra de
-  // direcciones dinámica). Si ScrollTrigger calcula posiciones antes de
-  // tiempo, algún `onEnter` puede no dispararse y el contenido quedaría
-  // oculto en opacity:0 para siempre. Refrescamos en los momentos clave.
-  const refresh = () => ScrollTrigger.refresh();
-  document.fonts.ready.then(refresh);
-  window.addEventListener('load', refresh);
-  // bfcache (volver atrás en Safari iOS): re-sincroniza el estado.
-  window.addEventListener('pageshow', (e) => {
-    if ((e as PageTransitionEvent).persisted) refresh();
-  });
-
-  // Fallback de visibilidad: elementos que deberían estar en pantalla pero
-  // siguen invisibles (trigger no disparado) se revelan sin animación.
-  // Garantiza que el contenido NUNCA quede vacío en móvil.
-  const REVEAL_SELECTORS = [
-    '.benefits__label', '.benefits__heading', '.benefits__card',
-    '.failures__label', '.failures__heading', '.failures__card',
-    '.target__caption', '.target__title', '.target__card',
-    '.about__caption', '.about__portrait--mobile', '.about__portrait--desktop',
-    '.about__phrase', '.about__signature',
-    '.price__card-container', '.counter',
-    '.modules__label', '.modules__heading', '.modules__description',
-    '.accordion', '.goodbye__label', '.goodbye__heading', '.goodbye .btn',
-  ].join(',');
-
-  const safetyReveal = () => {
-    document.querySelectorAll<HTMLElement>(REVEAL_SELECTORS).forEach((el) => {
-      const visibleInViewport = el.getBoundingClientRect().top < window.innerHeight;
-      if (visibleInViewport && getComputedStyle(el).opacity === '0') {
-        gsap.set(el, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'filter' });
-      }
-    });
-  };
-  window.addEventListener('load', () => setTimeout(safetyReveal, 1200));
+  // Recalcular posiciones de ScrollTrigger (solo activo en desktop) tras
+  // cargar fuentes e imágenes, que cambian la altura del documento.
+  document.fonts.ready.then(() => ScrollTrigger.refresh());
+  window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
 if (document.readyState === 'loading') {
