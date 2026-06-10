@@ -11,7 +11,7 @@ interface SubSection {
 interface ModuleCard {
   num: string;
   title: string;
-  description: string;
+  icon: string;
   list: Array<Record<string, string[] | SubSection | SubSection[]>>;
 }
 
@@ -19,7 +19,7 @@ const cardInfo: ModuleCard[] = [
   {
     num: "01",
     title: "La base de todo negocio que vende",
-    description: "El ciclo real de ventas",
+    icon: "mod-base",
     list: [
       {
         section1: [
@@ -33,13 +33,13 @@ const cardInfo: ModuleCard[] = [
   {
     num: "02",
     title: "Investigación de mercado que hace ganar dinero",
-    description: "Descubre qué quiere tu cliente.",
+    icon: "mod-research",
     list: [
       {
         section1: [
           "Por qué el cliente ideal tradicional ya no funciona",
           "Factores que determinan si alguien te compra o no",
-          "Cómo descubrir dolores, deseos y objeciones reales con herramientas gratuitas (investigación profunda) ",
+          "Cómo descubrir dolores, deseos y objeciones reales con herramientas gratuitas (investigación profunda)",
         ],
       },
     ],
@@ -47,15 +47,16 @@ const cardInfo: ModuleCard[] = [
   {
     num: "03",
     title: "La fórmula de los anuncios que sí funcionan",
-    description: "El triángulo dorado del marketing.",
+    icon: "mod-ads",
     list: [
       {
         section1: [
+          "El triángulo dorado del marketing",
           "Oferta irresistible: cómo hacer que quieran comprarte",
           "Audiencia",
           "Cómo escribir anuncios que convierten",
           "Creativos: Los 10 tipos de anuncios más efectivos",
-          "Apps gratuitas para crear anuncios profesionales",
+          "Apps gratuitas para crear anuncios profesionales (herramientas IA gratuitas)",
         ],
       },
     ],
@@ -63,7 +64,7 @@ const cardInfo: ModuleCard[] = [
   {
     num: "04",
     title: "Conﬁgura tu ecosistema profesional en Meta",
-    description: "Business Manager correcto desde el inicio.",
+    icon: "mod-setup",
     list: [
       {
         section1: [
@@ -79,7 +80,7 @@ const cardInfo: ModuleCard[] = [
   {
     num: "05",
     title: "Lanza campañas que generen resultados",
-    description: "Estructura hasta lanzamiento.",
+    icon: "mod-launch",
     list: [
       {
         section1: [
@@ -106,7 +107,6 @@ const cardInfo: ModuleCard[] = [
             "#3. Estructura correcta",
           ],
         },
-
         section4: [
           "Nombrando campañas, conjuntos de anuncios y anuncios",
           "Cómo calcular el presupuesto de tus campañas",
@@ -131,60 +131,10 @@ const cardInfo: ModuleCard[] = [
           title: "Campañas de Reconocimiento",
           items: ["Crear campañas desde cero", "Ubicaciones del Negocio"],
         },
-      },
-    ],
-  },
-  {
-    num: "06",
-    title: "Optimización: cómo dejar de perder dinero",
-    description: "La metodología real.",
-    list: [
-      {
-        section1: [
-          "Cómo funciona realmente el algoritmo de meta",
-          "Cómo analizar métricas correctamente",
-          "Optimización avanzada de campañas",
-          "Cómo mejorar creativos, mensajes y formularios",
-        ],
-      },
-    ],
-  },
-  {
-    num: "07",
-    title: "Manejando tus campañas rentablemente",
-    description: "Con diferentes presupuesto",
-    list: [
-      {
-        section1: [
-          "Los 2 errores más comunes al optimizar campañas de Meta Ads",
-          "Cómo funciona el algoritmo de Meta Ads",
-          "Cómo nunca perder dinero con tus anuncios",
-        ],
-        section2: {
-          title: "Columnas",
-          items: [
-            "Métricas para campañas de Ventas",
-            "Métricas para campañas de Interacción",
-            "Métricas para campañas de Clientes Potenciales",
-            "Métricas para campañas de Reconocimiento",
-          ],
-        },
-
-        section3: {
-          title: "Optimizando tus campañas",
-          items: [
-            "Optimizando campañas de Interacción",
-            "Optimizando campañas de Ventas",
-            "Optimizando campañas de Clientes Potenciales",
-            "Optimizando campañas de Reconocimiento a tiendas físicas",
-            "Fase de aprendizaje",
-          ],
-        },
-        section4: {
+        section9: {
           title: "Mejora el valor de tus anuncios",
           items: [
             "Anuncios de Colaboración",
-            "Maximizar el valor de las conversiones (Optimización de Valor)",
             "Atribución Incremental",
             "Reglas de Valor",
             "Informes de anuncios",
@@ -194,9 +144,69 @@ const cardInfo: ModuleCard[] = [
     ],
   },
   {
+    num: "06",
+    title: "Tu punto de partida: cómo pautar según la cuenta que tienes",
+    icon: "mod-start",
+    list: [
+      {
+        section1: [
+          "Los dos perfiles más comunes de quien empieza en Meta Ads",
+          "Perfil A — cuenta nueva sin historial ni contenido orgánico: ventajas, limitaciones y cómo compensarlas ",
+          "Perfil B — cuenta con historial pero sin orgánico: qué datos aprovechar y qué sigue siendo un punto ciego",
+          "El error que cometen ambos perfiles al lanzar su primera campaña ",
+          "Qué campaña lanzar primero según tu perfil",
+          "Cómo construir prueba social desde el anuncio",
+        ],
+      },
+    ],
+  },
+  {
+    num: "07",
+    title: "Optimización: cómo dejar de perder dinero",
+    icon: "mod-optimize",
+    list: [
+      {
+        section1: [
+          "Los 2 errores más comunes al optimizar campañas de Meta Ads",
+          "Cómo funciona el algoritmo de Meta Ads",
+          "Cómo nunca perder dinero con tus anuncios",
+        ],
+      },
+    ],
+  },
+  {
     num: "08",
+    title: "Manejando tus campañas rentablemente",
+    icon: "mod-manage",
+
+    list: [
+      {
+        section1: {
+          title: "Columnas",
+          items: [
+            "Métricas para campañas de Reconocimiento",
+            "Métricas para campañas de Interacción",
+            "Métricas para campañas de Clientes Potenciales",
+            "Métricas para campañas de Ventas",
+          ],
+        },
+
+        section2: {
+          title: "Optimizando tus campañas",
+          items: [
+            "Optimizando campañas de Interacción",
+            "Optimizando campañas de Ventas",
+            "Optimizando campañas de Clientes Potenciales",
+            "Fase de aprendizaje",
+          ],
+        },
+      },
+    ],
+  },
+  {
+    num: "09",
     title: "Escala tus campañas sin romper lo que funciona",
-    description: "El ciclo real de ventas",
+    icon: "mod-scale",
     list: [
       {
         section1: [
@@ -209,9 +219,9 @@ const cardInfo: ModuleCard[] = [
     ],
   },
   {
-    num: "09",
+    num: "10",
     title: "Pixel y Api de conversiones sin enredos",
-    description: "Herramientas que Meta necesita.",
+    icon: "mod-pixel",
     list: [
       {
         section1: [
@@ -226,23 +236,24 @@ const cardInfo: ModuleCard[] = [
     ],
   },
   {
-    num: "10",
+    num: "11",
     title: "Inteligencia Artificial para generar anuncios",
-    description: "Minutos en vez de horas",
+    icon: "mod-ai",
     list: [
       {
         section1: [
           "Guiones, copies y hooks con IA",
           "Creación de imágenes hiperrealistas",
           "Herramientas: ChatGPT, Gemini, Claude",
+          "Cómo analizar campañas con Claude"
         ],
       },
     ],
   },
   {
-    num: "11",
-    title: "Biblioteca de recursos para emprendedores",
-    description: "Bonus",
+    num: "12",
+    title: "Bonus — Biblioteca de recursos para emprendedores",
+    icon: "mod-bonus",
     list: [
       {
         section1: [
@@ -269,10 +280,14 @@ const cardInfo: ModuleCard[] = [
         <AcdBase>
           <div slot="summary" class="modules__accordion-summary">
             <div class="container">
+              <SvgSprite
+                name={item.icon}
+                size="1.5rem"
+                class="modules__accordion-icon"
+              />
               <p class="modules__accordion-number">{item.num}</p>
               <div class="modules__accordion-info">
                 <h3 class="modules__accordion-title">{item.title}</h3>
-                <p class="modules__accordion-text">{item.description}</p>
               </div>
             </div>
             <SvgSprite name="addition" size="0.5rem" class="addition" />
@@ -292,7 +307,14 @@ const cardInfo: ModuleCard[] = [
                     <ul class="modules__sub-section">
                       <li class="modules__sub-title">{sub.title}</li>
                       {sub.items.map((subItem) => (
-                        <li class="modules__points-list">{subItem}</li>
+                        <li class="modules__points-list">
+                          <SvgSprite
+                            name="chevron"
+                            size="0.9rem"
+                            class="modules__point-icon"
+                          />
+                          <span>{subItem}</span>
+                        </li>
                       ))}
                     </ul>
                   );
@@ -302,7 +324,14 @@ const cardInfo: ModuleCard[] = [
                   return (
                     <ul class="modules__section">
                       {(content as string[]).map((point) => (
-                        <li class="modules__points-list">{point}</li>
+                        <li class="modules__points-list">
+                          <SvgSprite
+                            name="check"
+                            size="1rem"
+                            class="modules__point-icon"
+                          />
+                          <span>{point}</span>
+                        </li>
                       ))}
                     </ul>
                   );
@@ -326,7 +355,6 @@ const cardInfo: ModuleCard[] = [
     >
       QUIERO INSCRIBIRME
     </BtnBasic>
-    <small class="modules__cta-caption">ACCESO DE POR VIDA</small>
   </div>
 </section>
 
@@ -367,6 +395,14 @@ const cardInfo: ModuleCard[] = [
 
         .container {
           display: flex;
+          align-items: center;
+
+          /* Icono temático del módulo — ancla visual de cada cabecera */
+          .modules__accordion-icon {
+            margin-right: 0.6rem;
+            color: var(--color-tertiary);
+            flex-shrink: 0;
+          }
 
           .modules__accordion-number {
             margin-right: 0.5rem;
@@ -376,6 +412,8 @@ const cardInfo: ModuleCard[] = [
           }
 
           .modules__accordion-info {
+            display: flex;
+            align-items: center;
             .modules__accordion-title {
               font-weight: var(--fw-bold);
             }
@@ -395,27 +433,41 @@ const cardInfo: ModuleCard[] = [
       }
 
       .modules__section-container {
-        margin-left: 2rem;
+        margin-left: 0.5rem;
+        text-align: left;
+
+        /* Viñeta con icono: el icono se alinea al inicio del texto y el
+           span fluye en columna para textos de varias líneas */
+        .modules__points-list {
+          list-style: none;
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+          padding-top: 0.35rem;
+
+          .modules__point-icon {
+            margin-top: 0.15rem;
+            color: var(--color-tertiary);
+            flex-shrink: 0;
+          }
+        }
 
         .modules__sub-section {
           padding-top: 0.5rem;
 
           .modules__sub-title {
-            list-style: disc;
+            list-style: none;
+            font-weight: var(--fw-bold);
+            color: var(--color-primary);
+            padding-top: 0.35rem;
           }
 
+          /* Sub-ítems: icono chevron en tono atenuado */
           .modules__points-list {
-            list-style: "-   ";
-            margin-left: 1rem;
-          }
-        }
+            margin-left: 0.75rem;
 
-        .modules__section {
-          .modules__points-list {
-            list-style: disc;
-
-            &:first-child {
-              padding-top: 0.5rem;
+            .modules__point-icon {
+              color: var(--color-extra);
             }
           }
         }
