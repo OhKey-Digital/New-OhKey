@@ -1,6 +1,6 @@
 # 🚀 OhKey — Estrategia Digital
 
-Landing page premium para el curso de **Meta Ads desde cero**, diseñada con animaciones cinematográficas de alta performance y responsividad total.
+Landing page para el curso de **Meta Ads desde cero**, diseñada con animaciones cinematográficas de alta performance y responsividad total.
 
 **Sitio en vivo:** [ohkeydigital.com](https://ohkeydigital.com)
 
