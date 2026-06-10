@@ -102,7 +102,7 @@ function init() {
         gsap.set(targets, { opacity: 0, y: yFull * 0.6 });
         ScrollTrigger.create({
           trigger: section,
-          start: 'top 80%',
+          start: 'top 90%',
           once: true,
           onEnter: () =>
             gsap.to(targets, {
@@ -119,7 +119,7 @@ function init() {
         gsap.set(targets, { opacity: 0, y: yFull * 0.6 });
         ScrollTrigger.create({
           trigger: section,
-          start: 'top 80%',
+          start: 'top 90%',
           once: true,
           onEnter: () =>
             gsap.to(targets, {
@@ -156,7 +156,7 @@ function init() {
         gsap.set(selector, initProps);
         ScrollTrigger.batch(selector, {
           onEnter: els => gsap.to(els, toProps),
-          start: 'top 87%',
+          start: 'top 92%',
           once: true,
         });
       };
@@ -181,7 +181,7 @@ function init() {
       gsap.set('.price__card-container', priceInit);
       ScrollTrigger.batch('.price__card-container', {
         onEnter: els => gsap.to(els, priceTo),
-        start: 'top 83%',
+        start: 'top 90%',
         once: true,
       });
 
@@ -195,7 +195,7 @@ function init() {
             ease: 'power2.out',
             stagger: isDesktop ? 0.06 : 0.04,
           }),
-        start: 'top 90%',
+        start: 'top 95%',
         once: true,
       });
 
@@ -210,7 +210,7 @@ function init() {
       gsap.set('.about__portrait--mobile, .about__portrait--desktop', portraitInit);
       ScrollTrigger.create({
         trigger: '.about-section',
-        start: 'top 82%',
+        start: 'top 90%',
         once: true,
         onEnter: () =>
           gsap.to('.about__portrait--mobile, .about__portrait--desktop', portraitTo),
@@ -221,7 +221,7 @@ function init() {
         onEnter: els => gsap.to(els, {
           opacity: 1, y: 0, duration: 0.65, ease: 'power2.out', stagger: 0.12,
         }),
-        start: 'top 88%',
+        start: 'top 92%',
         once: true,
       });
 
@@ -229,7 +229,7 @@ function init() {
       gsap.set('.about__signature', { opacity: 0, rotate: -5, y: 12, scale: 0.9 });
       ScrollTrigger.create({
         trigger: '.about__signature',
-        start: 'top 90%',
+        start: 'top 95%',
         once: true,
         onEnter: () =>
           gsap.to('.about__signature', {
@@ -242,7 +242,7 @@ function init() {
       gsap.set('.goodbye .btn', { opacity: 0, scale: 0.88 });
       ScrollTrigger.create({
         trigger: '.goodbye',
-        start: 'top 80%',
+        start: 'top 90%',
         once: true,
         onEnter: () =>
           gsap.to('.goodbye .btn', {
@@ -304,8 +304,42 @@ function init() {
     },
   );
 
-  // Recalcular posiciones de ScrollTrigger tras cargar todas las fuentes
-  document.fonts.ready.then(() => ScrollTrigger.refresh());
+  // ── REFRESH + RED DE SEGURIDAD ──────────────────────────────────────
+  // En móvil el layout se estabiliza tarde (fuentes, imágenes, barra de
+  // direcciones dinámica). Si ScrollTrigger calcula posiciones antes de
+  // tiempo, algún `onEnter` puede no dispararse y el contenido quedaría
+  // oculto en opacity:0 para siempre. Refrescamos en los momentos clave.
+  const refresh = () => ScrollTrigger.refresh();
+  document.fonts.ready.then(refresh);
+  window.addEventListener('load', refresh);
+  // bfcache (volver atrás en Safari iOS): re-sincroniza el estado.
+  window.addEventListener('pageshow', (e) => {
+    if ((e as PageTransitionEvent).persisted) refresh();
+  });
+
+  // Fallback de visibilidad: elementos que deberían estar en pantalla pero
+  // siguen invisibles (trigger no disparado) se revelan sin animación.
+  // Garantiza que el contenido NUNCA quede vacío en móvil.
+  const REVEAL_SELECTORS = [
+    '.benefits__label', '.benefits__heading', '.benefits__card',
+    '.failures__label', '.failures__heading', '.failures__card',
+    '.target__caption', '.target__title', '.target__card',
+    '.about__caption', '.about__portrait--mobile', '.about__portrait--desktop',
+    '.about__phrase', '.about__signature',
+    '.price__card-container', '.counter',
+    '.modules__label', '.modules__heading', '.modules__description',
+    '.accordion', '.goodbye__label', '.goodbye__heading', '.goodbye .btn',
+  ].join(',');
+
+  const safetyReveal = () => {
+    document.querySelectorAll<HTMLElement>(REVEAL_SELECTORS).forEach((el) => {
+      const visibleInViewport = el.getBoundingClientRect().top < window.innerHeight;
+      if (visibleInViewport && getComputedStyle(el).opacity === '0') {
+        gsap.set(el, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: 'filter' });
+      }
+    });
+  };
+  window.addEventListener('load', () => setTimeout(safetyReveal, 1200));
 }
 
 if (document.readyState === 'loading') {
