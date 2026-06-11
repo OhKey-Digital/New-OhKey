@@ -15,6 +15,12 @@ interface priceCard {
 function iconFor(feature: string): string {
   const f = feature.toLowerCase();
   if (f.startsWith("sin ")) return "cross"; // beneficio NO incluido
+  // Características exclusivas del plan PRO ($120) — iconos temáticos por módulo
+  if (f.includes("investigación")) return "mod-research";
+  if (f.includes("estrategias"))   return "mod-scale";
+  if (f.includes("campañas"))      return "mod-ads";
+  if (f.includes("optimización"))  return "mod-optimize";
+  if (f.includes("claude") || f.includes("análisis")) return "mod-ai";
   if (f.includes("módulos")) return "mod-base";
   if (f.includes("clases en vivo")) return "video";
   if (f.includes("grabaciones")) return "clock";
@@ -30,7 +36,7 @@ const cardDetail: priceCard[] = [
     priceFull: "$80 USD",
     priceOff: "$60",
     list: [
-      "10 módulos",
+      "11 módulos",
       "Clases en vivo",
       "Accesos a grabaciones por 1 semana",
       "+20 plantillas OhKey",
@@ -44,7 +50,12 @@ const cardDetail: priceCard[] = [
     priceOff: "$120",
     list: [
       "1:1 Tutorías 8 horas",
-      "10 módulos",
+      "Investigación profunda de tu mercado",
+      "Creación de estrategias",
+      "Creación de Campañas",
+      "Optimización",
+      "Skills de análisis para Claude",
+      "11 módulos",
       "Clases en vivo",
       "Accesos a grabaciones por 3 meses",
       "+20 plantillas OhKey",
@@ -56,7 +67,7 @@ const cardDetail: priceCard[] = [
 ];
 ---
 
-<section class="price-section reveal">
+<section class="price-section">
   {
     cardDetail.map((item) => (
       <div class="price__card-container">
