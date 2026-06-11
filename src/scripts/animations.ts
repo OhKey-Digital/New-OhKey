@@ -8,10 +8,83 @@ function init() {
 
   const mm = gsap.matchMedia();
 
+  // ── ANIMACIONES FAIL-SAFE para móvil y tablet (<1280px) ──────────────────
+  // IntersectionObserver es robusto en táctil; gsap.from() con immediateRender:false
+  // garantiza que el elemento es visible por defecto y solo se oculta en el
+  // instante en que entra al viewport. clearProps:'all' elimina estilos inline al
+  // terminar → nunca quedan elementos atascados en opacity:0.
+  function initMobileReveal() {
+    // Un observer por elemento: observe() + disconnect() al disparar
+    function reveal(selector: string, fromVars: gsap.TweenVars, threshold = 0.1) {
+      document.querySelectorAll<Element>(selector).forEach((el) => {
+        const obs = new IntersectionObserver(
+          ([entry]) => {
+            if (!entry.isIntersecting) return;
+            obs.disconnect();
+            // clearProps solo sobre las propiedades animadas: nunca tocar
+            // custom properties inline (--bg-color, --tx-color) de los botones
+            gsap.from(el, { ...fromVars, immediateRender: false, clearProps: 'opacity,transform' });
+          },
+          { threshold },
+        );
+        obs.observe(el);
+      });
+    }
+
+    // Headings y labels: slide-up suave
+    reveal(
+      '.benefits__label, .benefits__heading,' +
+      '.failures__label, .failures__heading,' +
+      '.target__caption, .target__title,' +
+      '.about__caption, .counter,' +
+      '.goodbye__label, .goodbye__heading,' +
+      '.modules__label, .modules__heading, .modules__description',
+      { opacity: 0, y: 22, duration: 0.5, ease: 'power2.out' },
+    );
+
+    // Cards genéricas: fade-up con scale sutil
+    reveal(
+      '.benefits__card, .failures__card, .target__card',
+      { opacity: 0, y: 18, scale: 0.97, duration: 0.45, ease: 'power2.out' },
+    );
+
+    // Tarjetas de precio: overshoot ligero para dar peso visual
+    reveal(
+      '.price__card-container',
+      { opacity: 0, y: 24, scale: 0.96, duration: 0.5, ease: 'back.out(1.2)' },
+    );
+
+    // Acordeones: slide desde la izquierda, igual que en desktop pero más corto
+    reveal(
+      '.accordion',
+      { opacity: 0, x: -14, duration: 0.38, ease: 'power2.out' },
+      0.05,
+    );
+
+    // Retrato About: zoom-in sutil
+    reveal(
+      '.about__portrait--mobile',
+      { opacity: 0, scale: 1.05, duration: 0.6, ease: 'power2.out' },
+    );
+
+    // Frases About: fade-up en cascada natural por scroll
+    reveal(
+      '.about__phrase',
+      { opacity: 0, y: 14, duration: 0.45, ease: 'power2.out' },
+    );
+
+    // CTAs secundarios: pop de entrada
+    reveal(
+      '.modules__cta .btn, .goodbye .btn',
+      { opacity: 0, scale: 0.9, duration: 0.5, ease: 'back.out(1.5)' },
+    );
+
+  }
+
   mm.add(
     {
-      isDesktop: '(min-width: 1024px)',
-      isMobile: '(max-width: 1023px)',
+      isDesktop: '(min-width: 1280px)',
+      isMobile: '(max-width: 1279px)',
     },
     (ctx) => {
       const { isDesktop } = ctx.conditions as Record<string, boolean>;
@@ -68,12 +141,14 @@ function init() {
           stagger,
         }, '-=0.2');
 
-      // ── CORTE MÓVIL ───────────────────────────────────────────────────
-      // En móvil terminamos aquí. NO usamos ScrollTrigger: el viewport
-      // táctil es inestable (barra de direcciones que aparece/desaparece)
-      // y los cálculos de posición fallan, dejando secciones invisibles
-      // hasta forzar un recálculo. El contenido queda visible y estático.
-      if (!isDesktop) return;
+      // ── CORTE MÓVIL/TABLET (<1280px) ─────────────────────────────────
+      // ScrollTrigger es infiable en viewports táctiles: la barra de
+      // direcciones dinámica hace fallar los cálculos de posición y deja
+      // secciones atascadas en opacity:0. Se delega a initMobileReveal().
+      if (!isDesktop) {
+        initMobileReveal();
+        return;
+      }
 
       // ════════════════════════════════════════════════════════════════
       //  DESKTOP ONLY — animaciones de scroll (viewport estable y fiable)
@@ -117,6 +192,7 @@ function init() {
             gsap.to(targets, {
               opacity: 1, y: 0,
               duration: 0.7, ease: 'power3.out', stagger: 0.1,
+              clearProps: 'all',
             }),
         });
       });
@@ -134,6 +210,7 @@ function init() {
             gsap.to(targets, {
               opacity: 1, y: 0,
               duration: 0.7, ease: 'power3.out', stagger: 0.1,
+              clearProps: 'all',
             }),
         });
       });
@@ -175,7 +252,7 @@ function init() {
             duration: dur + 0.2,
             ease: 'back.out(1.3)',
             stagger: stagger * 1.2,
-            clearProps: 'filter',
+            clearProps: 'all',
           }),
         start: 'top 90%',
         once: true,
@@ -188,6 +265,7 @@ function init() {
           gsap.to(els, {
             opacity: 1, x: 0,
             duration: 0.5, ease: 'power2.out', stagger: 0.06,
+            clearProps: 'all',
           }),
         start: 'top 95%',
         once: true,
@@ -204,7 +282,7 @@ function init() {
         onEnter: () =>
           gsap.to('.about__portrait--mobile, .about__portrait--desktop', {
             opacity: 1, scale: 1, filter: 'blur(0px)',
-            duration: 1.0, ease: 'power2.out', clearProps: 'filter',
+            duration: 1.0, ease: 'power2.out', clearProps: 'all',
           }),
       });
 
@@ -212,6 +290,7 @@ function init() {
       ScrollTrigger.batch('.about__phrase', {
         onEnter: els => gsap.to(els, {
           opacity: 1, y: 0, duration: 0.65, ease: 'power2.out', stagger: 0.12,
+          clearProps: 'all',
         }),
         start: 'top 92%',
         once: true,
@@ -240,6 +319,7 @@ function init() {
           gsap.to('.goodbye .btn', {
             opacity: 1, scale: 1,
             duration: 0.65, ease: 'back.out(1.6)', delay: 0.35,
+            clearProps: 'opacity,transform',
           }),
       });
 
