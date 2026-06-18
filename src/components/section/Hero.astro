@@ -31,7 +31,12 @@ const statsInfo: HeroCard[] = [
 
 <section class="hero-section">
   <div class="hero__logo">
-    <SvgSingle name="logo" width="10rem" />
+    <SvgSingle
+      name="logo"
+      width="10rem"
+      role="img"
+      aria-label="OhKey Estrategias Digitales"
+    />
   </div>
 
   <!-- Título con estructura de máscara: cada line__inner se revela
@@ -108,7 +113,7 @@ antes de escalar
     {
       statsInfo.map((item) => (
         <CrdBasic class="hero__stat-card">
-          <h2 class="hero__stat-title">{item.title}</h2>
+          <p class="hero__stat-title">{item.title}</p>
           <p class="hero__stat-description">{item.description}</p>
         </CrdBasic>
       ))
