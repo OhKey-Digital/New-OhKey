@@ -1,0 +1,9 @@
+# robots.txt — OhKey Estrategias Digitales
+# Permite el rastreo completo del sitio a todos los bots, salvo los endpoints de API.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Ubicación del sitemap generado automáticamente en el build por @astrojs/sitemap
+Sitemap: https://ohkeydigital.com/sitemap-index.xml

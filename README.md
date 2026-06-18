@@ -62,7 +62,7 @@ Landing page para el curso de **Meta Ads desde cero**, diseñada con animaciones
 | **GSAP**          | 3.15.0   | Animaciones y ScrollTrigger                |
 | **CSS Nesting**   | Nativo   | Estilos componentes scoped                 |
 | **Sharp**         | 0.34.5   | Optimización de imágenes                  |
-| **Vercel**        | 10.0.7   | Deploy y hosting                          |
+| **@astrojs/node** | 10.1.4   | Adaptador SSR (modo standalone) para VPS  |
 
 **Node.js requerido:** ≥22.12.0  
 **Package manager:** pnpm 11.1.3+
@@ -92,7 +92,17 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador. Los cambios
 ```bash
 pnpm build
 ```
-El output estático se genera en `/dist/` listo para deploy en Vercel.
+Genera un servidor Node autocontenido en `/dist/server/` (modo `standalone` del adaptador `@astrojs/node`) más los assets estáticos en `/dist/client/`.
+
+### Ejecutar el servidor de producción
+```bash
+node ./dist/server/entry.mjs
+```
+Por defecto escucha en `0.0.0.0:4321`. El host y puerto se pueden sobrescribir con las variables `HOST` y `PORT`:
+```bash
+HOST=127.0.0.1 PORT=4321 node ./dist/server/entry.mjs
+```
+Para el despliegue en un VPS con PM2 y Nginx como reverse proxy, ver [`guia.md`](./guia.md).
 
 ### Preview del build
 ```bash
@@ -259,15 +269,22 @@ width, height, margin, padding, top, left
 ```
 
 ### Conversión API (CAPI)
-Endpoint: `POST /api/track`
+Endpoint server-side (`prerender = false`): `POST /api/track`
+
+Body enviado desde el cliente:
 ```javascript
 {
   eventName: "Contact",
   eventId: "evt_" + timestamp,
-  url: window.location.href,
-  userAgent: navigator.userAgent
+  url: window.location.href
 }
 ```
+
+El servidor enriquece el evento con datos que **no** vienen del cliente, leídos directamente de los headers de la petición Node (confiables, a diferencia de los enviados por el navegador):
+- `client_ip_address`: extraída de `X-Forwarded-For` (o `X-Real-IP` como fallback), inyectado por Nginx.
+- `client_user_agent`: extraído del header `User-Agent` de la propia petición HTTP.
+
+Por eso es **obligatorio** que el reverse proxy (Nginx) reenvíe estos headers — ver [`guia.md`](./guia.md).
 
 ---
 
@@ -286,32 +303,34 @@ Endpoint: `POST /api/track`
 
 ## 📝 Variables de entorno
 
-Crea un archivo `.env.local` (no commiteado) en la raíz:
+Crea un archivo `.env` (no commiteado) en la raíz:
 
 ```env
 PUBLIC_PIXEL_ID=782341138085266
+META_ACCESS_TOKEN=tu_token_de_acceso_de_meta
 ```
 
-El `PUBLIC_` prefix indica que se expone en el navegador (seguro para Pixel ID).
+| Variable             | Usada en      | Descripción                                                        |
+|----------------------|----------------|---------------------------------------------------------------------|
+| `PUBLIC_PIXEL_ID`     | Build (cliente y servidor) | ID del Pixel de Meta. El prefijo `PUBLIC_` lo expone en el navegador (seguro). |
+| `META_ACCESS_TOKEN`   | Runtime (solo servidor) | Token de acceso de la Conversions API. **Secreto**, nunca debe llevar el prefijo `PUBLIC_` ni commitearse. |
+| `HOST` (opcional)     | Runtime del servidor Node | Host donde escucha el servidor standalone (default `0.0.0.0`). |
+| `PORT` (opcional)     | Runtime del servidor Node | Puerto donde escucha el servidor standalone (default `4321`). |
 
 ---
 
-## 🚢 Deploy en Vercel
+## 🚢 Despliegue en producción (VPS)
 
-Este proyecto está configurado para deploy automático en Vercel.
+Este proyecto compila a un servidor Node.js autocontenido mediante el adaptador `@astrojs/node` en modo `standalone`, pensado para correr detrás de un reverse proxy (Nginx) junto a otros sitios en el mismo VPS, gestionado con PM2.
 
-### Pasos
-1. **Push a GitHub:**
-   ```bash
-   git push origin main
-   ```
+Guía completa paso a paso: [`guia.md`](./guia.md).
 
-2. **Conectar Vercel:**
-   - Ir a [vercel.com](https://vercel.com)
-   - Importar repositorio
-   - Auto-detecta `astro.config.mjs` + Vercel adapter
-
-3. **Deploy:** Automático en cada push a `main`
+### Resumen rápido
+```bash
+pnpm install
+pnpm build
+META_ACCESS_TOKEN=xxx PUBLIC_PIXEL_ID=xxx PORT=4321 node ./dist/server/entry.mjs
+```
 
 ---
 
