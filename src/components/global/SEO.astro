@@ -1,0 +1,59 @@
+---
+/**
+ * Componente SEO reutilizable.
+ * Centraliza title, description, keywords, canonical, Open Graph y Twitter Cards.
+ * Cada página puede sobreescribir cualquier valor mediante props; si se omiten,
+ * se usan los valores por defecto de marca (optimizados para la home).
+ */
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string; // ruta relativa al sitio (se resuelve a absoluta)
+  ogType?: "website" | "article";
+  noindex?: boolean; // true en páginas que no deban indexarse
+}
+
+const {
+  title = "OhKey | Curso de Meta Ads desde cero en Ecuador",
+  description = "Aprende Meta Ads desde cero y empieza a anunciar desde $50. Curso práctico con estrategia real, plantillas y comunidad. Haz rendir cada dólar antes de escalar.",
+  keywords = "curso meta ads, facebook ads ecuador, publicidad meta, curso facebook ads, meta ads desde cero, marketing digital ecuador, paid media",
+  ogImage = "/og-image.jpg",
+  ogType = "website",
+  noindex = false,
+} = Astro.props;
+
+// Canonical dinámica y absoluta basada en la ruta actual y el `site` del config.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+---
+
+{/* Metadatos primarios */}
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<link rel="canonical" href={canonicalURL} />
+{
+  noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+  )
+}
+
+{/* Open Graph (Facebook, WhatsApp, LinkedIn...) */}
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:site_name" content="OhKey Estrategias Digitales" />
+
+{/* Twitter Card */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />

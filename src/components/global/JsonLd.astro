@@ -1,0 +1,77 @@
+---
+/**
+ * Datos estructurados (JSON-LD) para rich snippets en buscadores.
+ * Combina en un único @graph los schemas Organization, WebSite y Course,
+ * enlazados por @id para que Google entienda las relaciones entre entidades.
+ */
+const site = Astro.site?.toString().replace(/\/$/, "") ?? "https://ohkeydigital.com";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site}/#organization`,
+      name: "OhKey Estrategias Digitales",
+      url: site,
+      logo: `${site}/og-image.jpg`,
+      image: `${site}/og-image.jpg`,
+      description:
+        "Escuela y consultoría de Meta Ads y estrategia digital fundada por Daniela Franco.",
+      founder: {
+        "@type": "Person",
+        name: "Daniela Franco",
+        jobTitle: "Estratega Digital y Especialista en Meta Ads",
+      },
+      email: "ohkeyestrategiasdigitales@gmail.com",
+      sameAs: ["https://wa.me/593982422500"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site}/#website`,
+      url: site,
+      name: "OhKey | Curso de Meta Ads",
+      description:
+        "Curso de Meta Ads desde cero para empezar a anunciar desde $50.",
+      inLanguage: "es",
+      publisher: { "@id": `${site}/#organization` },
+    },
+    {
+      "@type": "Course",
+      "@id": `${site}/#course`,
+      name: "Meta Ads desde cero",
+      description:
+        "Curso práctico de Meta Ads (Facebook e Instagram Ads) para emprendedores y agencias. 11 módulos, +20 horas, plantillas y comunidad. Aprende a vender con Meta sin desperdiciar dinero, empezando desde $50.",
+      url: site,
+      inLanguage: "es",
+      provider: { "@id": `${site}/#organization` },
+      educationalLevel: "Principiante a intermedio",
+      teaches: [
+        "Fundamentos de marketing",
+        "Estrategia de Meta Ads",
+        "Creación y optimización de campañas",
+        "Investigación de mercado",
+      ],
+      hasCourseInstance: {
+        "@type": "CourseInstance",
+        courseMode: "online",
+        courseWorkload: "PT20H",
+        instructor: {
+          "@type": "Person",
+          name: "Daniela Franco",
+        },
+      },
+      offers: {
+        "@type": "Offer",
+        category: "Paid",
+        priceCurrency: "USD",
+        price: "60",
+        availability: "https://schema.org/InStock",
+        url: site,
+      },
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />

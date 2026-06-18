@@ -1,9 +1,26 @@
 ---
 import Footer from "../components/global/Footer.astro";
 import Navbar from "../components/global/Navbar.astro";
+import SEO from "../components/global/SEO.astro";
+import JsonLd from "../components/global/JsonLd.astro";
 
 import "../styles/reset.css";
 import "../styles/variables.css";
+
+// Fuente crítica importada como asset para obtener su URL con hash y precargarla.
+import publicSans from "../assets/fonts/PublicSans-Variable.woff2";
+
+// Props SEO que cada página puede sobreescribir; se delegan al componente <SEO />.
+interface Props {
+	title?: string;
+	description?: string;
+	keywords?: string;
+	ogImage?: string;
+	ogType?: "website" | "article";
+	noindex?: boolean;
+}
+
+const seo = Astro.props;
 
 const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 ---
@@ -15,17 +32,27 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
-		<link rel="canonical" href="https://ohkeydigital.com" />
+
+		<!-- Precarga de la fuente crítica (LCP del Hero): evita FOUT y reduce CLS -->
+		<link
+			rel="preload"
+			as="font"
+			type="font/woff2"
+			href={publicSans}
+			crossorigin
+		/>
+
 		<meta
 			name="facebook-domain-verification"
 			content="8b977xy9ew64vn753rt8q678dju7k5"
 		/>
-		<meta
-			name="description"
-			content="Estrategia digital, copywriting y optimización para tu negocio."
-		/>
 		<meta name="generator" content={Astro.generator} />
-		<title>OhKey | Estrategia Digital</title>
+
+		<!-- SEO: title, description, canonical, Open Graph y Twitter Cards -->
+		<SEO {...seo} />
+
+		<!-- Datos estructurados (Organization, WebSite, Course) -->
+		<JsonLd />
 
 		<!-- Meta Pixel Code -->
 		<script is:inline data-pixel-id={pixelId}>
@@ -91,7 +118,9 @@ const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
 				style="display:none;visibility:hidden"></iframe></noscript
 		>
 		<Navbar />
-		<slot />
+		<main>
+			<slot />
+		</main>
 		<Footer />
 	</body>
 </html>
