@@ -102,7 +102,7 @@ const cardDetail: priceCard[] = [
   }
 
   <small class="counter">
-    <span id="countdown-price"></span>/100 CUPOS <b
+    <span id="countdown-price"></span>/50 CUPOS <b
       >- <span id="available"></span> disponibles</b
     ></small
   >
@@ -110,12 +110,13 @@ const cardDetail: priceCard[] = [
 
 <script>
   window.addEventListener("counter", ((event: CustomEvent) => {
-    const value = event.detail.value;
+    const currentValue = event.detail.currentValue;
+    const restValue = event.detail.restValue;
     const span = document.getElementById("countdown-price");
-    if (span) span.textContent = value;
+    if (span) span.textContent = restValue;
 
     const span2 = document.getElementById("available");
-    if (span2) span2.textContent = value;
+    if (span2) span2.textContent = currentValue;
   }) as EventListener);
 </script>
 

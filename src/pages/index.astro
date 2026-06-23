@@ -29,7 +29,7 @@ import Marquee from "../components/shared/Marquee.astro";
 
 <script>
   const START_DATE = new Date("2026-05-14T00:00:00");
-  const MAX_VALUE = 100;
+  const MAX_VALUE = 50;
 
   function updateCounter() {
     const now = new Date();
@@ -38,8 +38,9 @@ import Marquee from "../components/shared/Marquee.astro";
     const daysPassed = Math.floor(diffInMs / (1000 * 60 * 60 * 12));
 
     const currentValue = MAX_VALUE - (daysPassed % MAX_VALUE);
+    const restValue = MAX_VALUE - currentValue;
 
-	const event = new CustomEvent("counter", {detail: {value: currentValue}});
+	const event = new CustomEvent("counter", {detail: {restValue: restValue, currentValue: currentValue}});
     window.dispatchEvent(event);
   }
 

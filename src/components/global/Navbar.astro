@@ -8,13 +8,13 @@ import BtnBasic from "../shared/button/BtnBasic.astro";
     <BtnBasic class="btn" href="https://wa.me/593982422500" target="_blank"
       >QUIERO OBTENER EL CURSO</BtnBasic
     >
-    <p class="quotas">CUPOS: <span id="countdown"></span> / 100</p>
+    <p class="quotas">CUPOS: <span id="countdown"></span> / 50</p>
   </div>
 </nav>
 
 <script>
   window.addEventListener("counter", ((event: CustomEvent) => {
-    const value = event.detail.value;
+    const value = event.detail.restValue;
     const span = document.getElementById("countdown");
     if (span) span.textContent = value;
   }) as EventListener);
