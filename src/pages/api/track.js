@@ -20,7 +20,7 @@ function getClientIp(request, clientAddress) {
 export const POST = async ({ request, clientAddress }) => {
     try {
         const body = await request.json();
-        const { eventName, eventId, url } = body;
+        const { eventName, eventId, url, customData, fbp, fbc } = body;
 
         const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
         const accessToken = process.env.META_ACCESS_TOKEN;
@@ -37,6 +37,15 @@ export const POST = async ({ request, clientAddress }) => {
         const clientIp = getClientIp(request, clientAddress);
         const clientUserAgent = request.headers.get("user-agent");
 
+        // _fbp y _fbc elevan la calidad de coincidencia (EMQ) y refuerzan la
+        // deduplicación con el Pixel. Solo se incluyen si el cliente los envía.
+        const userData = {
+            client_ip_address: clientIp,
+            client_user_agent: clientUserAgent,
+        };
+        if (fbp) userData.fbp = fbp;
+        if (fbc) userData.fbc = fbc;
+
         const metaPayload = {
             data: [{
                 event_name: eventName,
@@ -44,18 +53,25 @@ export const POST = async ({ request, clientAddress }) => {
                 event_id: eventId,
                 event_source_url: url,
                 action_source: "website",
-                user_data: {
-                    client_ip_address: clientIp,
-                    client_user_agent: clientUserAgent,
-                },
+                user_data: userData,
+                ...(customData && { custom_data: customData }),
             }],
         };
 
-        await fetch(`https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${accessToken}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(metaPayload),
-        });
+        const metaResponse = await fetch(
+            `https://graph.facebook.com/v21.0/${pixelId}/events?access_token=${accessToken}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(metaPayload),
+            },
+        );
+
+        if (!metaResponse.ok) {
+            const errorBody = await metaResponse.text();
+            console.error(`CAPI: Graph API respondió ${metaResponse.status}:`, errorBody);
+            return new Response(JSON.stringify({ success: false }), { status: 502 });
+        }
 
         return new Response(JSON.stringify({ success: true }), { status: 200 });
     } catch (e) {
