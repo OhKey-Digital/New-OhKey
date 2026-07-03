@@ -1,44 +1,61 @@
 ---
 import CrdBasic from "../shared/card/CrdBasic.astro";
+import SvgSprite from "../shared/svg/SvgSprite.astro";
 
 interface TargetCard {
-    title: string;
     description: string;
+    // Ícono relacionado con la descripción. Debe coincidir con un id de /public/sprites.svg
+    icon: string;
 }
 
 const targetAudience: TargetCard[] = [
     {
-        title: "ESTUDIANTE",
         description:
-            "Que quieren generar un recurso extra y conseguir sus propios clientes.",
+            "Nunca has creado una campaña.",
+        icon: "mod-launch",
     },
     {
-        title: "OTRO COLEGA",
         description:
-            "Frameworks avanzados, optimización profunda, escalado sin romper rentabilidad.",
+            "Ya hiciste anuncios, pero no funcionaron.",
+        icon: "mod-ads",
     },
     {
-        title: "EMPRENDEDOR",
         description:
-            "Fundé OhKey con limitaciones. Sé exactamente cómo estructurar con $50, $200 o $500.",
+            "Tienes una cuenta nueva.",
+        icon: "user-plus",
     },
     {
-        title: "DISEÑADOR, CMS",
         description:
-            "Amplía tus servicios ofreciendo manejo real de Meta Ads, no solo poner anuncios.",
+            "Tienes una cuenta con historial y no sabes cómo aprovecharla.",
+        icon: "clock",
+    },
+    {
+        description:
+            "Quieres vender más sin depender de agencias.",
+        icon: "mod-scale",
+    },
+    {
+        description:
+            "Tienes presupuesto pequeño y quieres empezar a invertir.",
+        icon: "coin",
     },
 ];
 ---
 
 <section class="target-section">
     <small class="target__caption">¿PARA QUIÉN ES?</small>
-    <h2 class="target__title">Este curso es para ti si eres…</h2>
+    <h2 class="target__title">Este entrenamiento es para ti, si...</h2>
 
     <div class="target__grid">
         {
             targetAudience.map((item) => (
                 <CrdBasic variant="none" class="target__card">
-                    <h3 class="target__card-title">{item.title}</h3>
+                    {/*
+                        Ícono relacionado con la descripción, al principio de cada tarjeta.
+                        Va antes del <p>. El id sale de item.icon (ver targetAudience).
+                        Ajusta el ícono desde la data o agrega nuevos en /public/sprites.svg.
+                    */}
+                    <SvgSprite name={item.icon} size="1.1rem" class="target__card-icon" />
                     <p class="target__card-description">{item.description}</p>
                 </CrdBasic>
             ))
@@ -80,18 +97,21 @@ const targetAudience: TargetCard[] = [
             .target__card {
                 width: 100%;
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.5rem;
 
-                .target__card-title {
-                    font-size: var(--fs-body);
-                    font-weight: var(--fw-black);
+                .target__card-icon {
+                    color: var(--color-primary);
+                    flex-shrink: 0;
                 }
 
                 .target__card-description {
                     font-weight: var(--fw-light);
-                    max-width: 15rem;
-                    margin-inline: auto;
-                    flex-grow: 1;
+                    width: 100%;
+                    height: fit-content;
+                    align-self: center;
+                    text-align: start;
                 }
             }
 
