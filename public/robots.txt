@@ -6,4 +6,4 @@ Allow: /
 Disallow: /api/
 
 # Ubicación del sitemap generado automáticamente en el build por @astrojs/sitemap
-Sitemap: https://ohkeydigital.com/sitemap-index.xml
+Sitemap: https://aprende.ohkeydigital.com/sitemap-index.xml

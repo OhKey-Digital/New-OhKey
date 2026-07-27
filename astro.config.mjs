@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   // URL canónica de producción: imprescindible para el sitemap y las URLs canónicas absolutas
-  site: 'https://ohkeydigital.com',
+  site: 'https://aprende.ohkeydigital.com',
   output: 'static', // híbrido: páginas estáticas + endpoints on-demand (ej. /api/track)
   adapter: node({ mode: 'standalone' }),
   integrations: [
