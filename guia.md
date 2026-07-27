@@ -47,20 +47,12 @@ cd /var/www/ohkey
 
 ---
 
-## 3. Instalar dependencias y compilar
+## 3. Configurar variables de entorno
 
-```bash
-pnpm install
-pnpm build
-```
-
-Esto genera:
-- `dist/server/entry.mjs` → el servidor Node autocontenido.
-- `dist/client/` → los assets estáticos (CSS, JS, imágenes).
-
----
-
-## 4. Configurar variables de entorno
+> ⚠️ **Este paso va ANTES del build.** Las variables con prefijo `PUBLIC_` se
+> incrustan en el bundle durante `pnpm build`. Si compilas sin `.env`, el sitio
+> queda construido con esos valores vacíos y el endpoint `/api/track` devolverá
+> **500** aunque después definas las variables en PM2.
 
 Crea el archivo `.env` en la raíz del proyecto **en el servidor** (no se commitea nunca a git):
 
@@ -77,6 +69,25 @@ PORT=4321
 ```
 
 > `HOST=127.0.0.1` es importante: hace que el servidor Node **solo escuche en localhost**, no en todas las interfaces de red. Así, aunque el puerto quede "abierto" en el VPS, no es accesible directamente desde internet — solo a través de Nginx.
+
+---
+
+## 4. Instalar dependencias y compilar
+
+```bash
+pnpm install
+pnpm build
+```
+
+Esto genera:
+- `dist/server/entry.mjs` → el servidor Node autocontenido.
+- `dist/client/` → los assets estáticos (CSS, JS, imágenes).
+
+Verifica que las variables `PUBLIC_` quedaron incrustadas en el build:
+
+```bash
+grep -o 'data-pixel-id="[^"]*"' dist/client/index.html   # debe mostrar el ID, no vacío
+```
 
 ---
 

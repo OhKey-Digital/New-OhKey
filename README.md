@@ -2,7 +2,7 @@
 
 Landing page para el curso de **Meta Ads desde cero**, diseñada con animaciones cinematográficas de alta performance y responsividad total.
 
-**Sitio en vivo:** [ohkeydigital.com](https://ohkeydigital.com)
+**Sitio en vivo:** [aprende.ohkeydigital.com](https://aprende.ohkeydigital.com)
 
 ---
 
@@ -344,7 +344,7 @@ Este proyecto es propietario de **OhKey Estrategias Digitales**.
 
 - **Email:** ohkeyestrategiasdigitales@gmail.com
 - **WhatsApp:** +593 98 242 2500
-- **Sitio:** ohkeydigital.com
+- **Sitio:** aprende.ohkeydigital.com
 
 ---
 
