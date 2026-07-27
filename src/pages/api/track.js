@@ -22,7 +22,11 @@ export const POST = async ({ request, clientAddress }) => {
         const body = await request.json();
         const { eventName, eventId, url, customData, fbp, fbc } = body;
 
-        const pixelId = import.meta.env.PUBLIC_PIXEL_ID;
+        // Se lee en runtime (process.env) con fallback al valor inlineado en build.
+        // Las variables PUBLIC_ se incrustan en el bundle durante `pnpm build`: si el
+        // .env no existía en ese momento, quedarían como `undefined` para siempre.
+        // Leerlas del proceso permite que PM2 las inyecte sin depender del build.
+        const pixelId = process.env.PUBLIC_PIXEL_ID || import.meta.env.PUBLIC_PIXEL_ID;
         const accessToken = process.env.META_ACCESS_TOKEN;
 
         if (!pixelId || !accessToken) {
